@@ -1,0 +1,24 @@
+all:
+  vars:
+    ansible_user: "{{ example_user }}"
+    ansible_password: "{{ example_password }}"
+    ansible_become_password: "{{ example_password }}"
+  children:
+
+    k3s-cluster:
+      children:
+      
+        control-planes:
+          hosts:
+            cp1:
+              ansible_host: example_ip
+    
+        workers:
+          hosts:
+            w1:
+              ansible_host: example_ip
+            w2:
+              ansible_host: example_ip
+               
+
+
