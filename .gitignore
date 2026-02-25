@@ -1,0 +1,70 @@
+# OS / System files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+.history/
+
+# Logs
+*.log
+logs/
+*.out
+*.err
+
+# Environment files
+.env
+.env.*
+*.env
+*.local
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+.kube/
+kubeconfig.yaml
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfvars
+*.tfvars.json
+
+# Ansible
+*.retry
+ansible.log
+*.vault
+vault.yml
+vault.yaml
+
+# Ignore local inventory overrides
+inventory.local
+hosts.local
+
+# Docker
+docker-compose.override.yml
+*.pid
+
+# Flux / GitOps generated files
+clusters/*/flux-system/gotk-components.yaml
+clusters/*/flux-system/gotk-sync.yaml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*.bak
+
+# Bash history
+.bash_history
