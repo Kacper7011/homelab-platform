@@ -1,0 +1,16 @@
+- name: Set timezone to Europe/Warsaw
+  community.general.timezone:
+    name: Europe/Warsaw
+
+- name: Configure systemd-timesyncd NTP servers
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^#?NTP='
+    line: "NTP=0.pl.pool.ntp.org 1.pl.pool.ntp.org"
+  notify: Restart timesyncd
+
+- name: Ensure timesyncd is enabled and started
+  ansible.builtin.systemd:
+    name: systemd-timesyncd
+    enabled: yes
+    state: started

@@ -1,0 +1,19 @@
+- name: Update system
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+    cache_valid_time: 300
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - wget
+      - gnupg
+      - lsb-release
+      - apt-transport-https
+      - python3
+      - python3-apt
+      - systemd-timesyncd
+    state: present

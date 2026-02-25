@@ -1,0 +1,7 @@
+- name: Prepare Infrastructure
+  hosts: k3s-cluster
+  become: true
+  roles:
+    - role: bootstrap
+      tags:
+        - bootstrap

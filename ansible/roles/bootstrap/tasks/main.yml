@@ -1,0 +1,9 @@
+---
+# tasks file for bootstrap
+
+- import_tasks: system.yml
+- import_tasks: user.yml
+- import_tasks: keys.yml
+- import_tasks: sudo.yml
+- import_tasks: time.yml
+- import_tasks: ssh.yml
