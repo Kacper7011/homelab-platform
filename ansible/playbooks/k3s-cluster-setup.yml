@@ -5,3 +5,12 @@
     - role: bootstrap
       tags:
         - bootstrap
+
+- name: Install k3s server
+  hosts: control_planes
+  become: true
+  roles:
+    - role: k3s-server
+      tags:
+        - server
+        

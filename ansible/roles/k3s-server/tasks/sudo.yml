@@ -1,0 +1,23 @@
+- name: Ensure that ~/.kube/config directory exists
+  ansible.builtin.file:
+    path: "/home/{{ system_user }}/.kube"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: '0700'
+
+- name: Copy k3s.yaml to ~/.kube/config
+  ansible.builtin.copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "/home/{{ system_user }}/.kube/config"
+    remote_src: true
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: '0600'
+
+- name: Replace localhost with server IP
+  ansible.builtin.replace:
+    path: "/home/{{ system_user }}/.kube/config"
+    regexp: 'https://127.0.0.1:6443'
+    replace: "https://{{ ansible_default_ipv4.address }}:6443"
+
