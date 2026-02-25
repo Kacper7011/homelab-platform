@@ -41,6 +41,7 @@ override.tf.json
 *.tfvars.json
 
 # Ansible
+hosts.yml
 *.retry
 ansible.log
 *.vault
