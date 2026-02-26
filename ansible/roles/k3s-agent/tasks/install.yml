@@ -1,19 +1,20 @@
-- name: k3s instalation
+- name: k3s installation
   ansible.builtin.get_url:
     url: https://get.k3s.io
     dest: /tmp/k3s_install.sh
     mode: '0755'
 
-- name: Run k3s server
+- name: Run k3s agent
   ansible.builtin.command: /tmp/k3s_install.sh
   args:
     creates: /etc/systemd/system/k3s-agent.service
   environment:
     K3S_URL: "{{ k3s_url }}"
     K3S_TOKEN: "{{ k3s_token }}"
+    INSTALL_K3S_EXEC: "--node-label role=worker --node-role worker"
 
 - name: Ensure that k3s is running
   ansible.builtin.service:
-    name: k3s
+    name: k3s-agent
     state: started
     enabled: true

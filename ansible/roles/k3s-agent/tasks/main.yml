@@ -1,2 +1,6 @@
 ---
 # tasks file for k3s-agent
+
+- import_tasks: update.yml
+- import_tasks: swap.yml
+- import_tasks: install.yml
