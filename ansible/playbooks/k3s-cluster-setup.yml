@@ -8,9 +8,12 @@
 
 - name: Install k3s server
   hosts: control_planes
+  vars:
+    k3s_token: "{{ hostvars[groups['control_planes'][0]].k3s_node_token }}"
+    k3s_url: "https://{{ hostvars[groups['control_planes'][0]].ansible_host }}:6443"
   become: true
   roles:
     - role: k3s-server
       tags:
         - server
-        
+
