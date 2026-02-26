@@ -7,7 +7,7 @@
 - name: Run k3s server
   ansible.builtin.command: /tmp/k3s_install.sh
   args:
-    creates: /etc/systemd/system/l3s-agent.service
+    creates: /etc/systemd/system/k3s-agent.service
   environment:
     K3S_URL: "{{ k3s_url }}"
     K3S_TOKEN: "{{ k3s_token }}"

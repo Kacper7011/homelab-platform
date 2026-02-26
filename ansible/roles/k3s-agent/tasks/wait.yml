@@ -1,5 +1,0 @@
-- name: Wait for API server
-  wait_for:
-    host: "{{ hostvars[groups['control_planes'][0]].ansible_host }}"
-    port: 6443
-    timeout: 300
