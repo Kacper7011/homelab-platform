@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: nginx-test
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    targetPort: 80
