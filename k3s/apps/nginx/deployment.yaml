@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: nginx-test
+  namespace: nginx
 spec:
   replicas: 1
   selector:
@@ -12,16 +12,9 @@ spec:
     metadata:
       labels:
         app: nginx
-  spec:
-    containers:
-    - name: nginx
-      image: nginx:1.25
-      ports:
-      - containerPort: 80
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "128Mi"
-        limits:
-          cpu: "300m"
-          memory: "256Mi"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
