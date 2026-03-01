@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-  - host: heimdall.home
+  - host: heimdall.home.lan
     http:
       paths:
       - path: /
