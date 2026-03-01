@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m
   path: ./k3s/apps/heimdall
-  prune: yes
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
