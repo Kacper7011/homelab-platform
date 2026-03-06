@@ -1,0 +1,27 @@
+services:
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome 
+    restart: unless-stopped
+    ports:
+      - "4533:4533"
+    environment:
+      ND_SCANINTERVAL: 1m
+      ND_LOGLEVEL: info
+    volumes:
+      - /srv/navidrome/data:/data
+      - /srv/music/library:/music
+  
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    ports:
+      - "8384:8384"
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    volumes:
+      - /srv/syncthing:/var/syncthing
+      - /srv/music/library:/music  
