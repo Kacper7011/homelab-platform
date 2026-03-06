@@ -1,0 +1,9 @@
+- name: Add docker repository
+  ansible.builtin.copy:
+    dest: "{{ docker_sources }}"
+    content: "{{ docker_sources_content }}"
+    mode: '0644'
+
+- name: Update apt cache after adding repository 
+  ansible.builtin.apt:
+    update_cache: yes

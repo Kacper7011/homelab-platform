@@ -1,0 +1,5 @@
+- name: Download GPG keys 
+  ansible.builtin.get_url:
+    url: "{{ gpg_key_url }}"
+    dest: "{{ apt_key_dir }}/docker.asc"
+    mode: '0644'

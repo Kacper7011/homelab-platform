@@ -1,0 +1,10 @@
+---
+# tasks file for docker
+
+- import_tasks: system.yml
+- import_tasks: apt.yml
+- import_tasks: gpg.yml
+- import_tasks: repo.yml
+- import_tasks: install.yml
+- import_tasks: start.yml
+- import_tasks: group.yml

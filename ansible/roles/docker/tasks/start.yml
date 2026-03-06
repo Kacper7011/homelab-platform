@@ -1,0 +1,15 @@
+- name: Start docker
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Get docker service status
+  ansible.builtin.systemd:
+    name: docker
+  register: docker_data
+
+- name: Show if docker is running
+  ansible.builtin.debug:
+    msg: "Status: {{ docker_data.status.ActiveState }}"
+  when: docker_data.status is defined

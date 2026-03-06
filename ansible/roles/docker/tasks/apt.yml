@@ -1,0 +1,5 @@
+- name: Create directory for apt keys
+  ansible.builtin.file:
+    path: "{{ apt_key_dir }}"
+    state: directory 
+    mode: '0755'

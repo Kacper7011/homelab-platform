@@ -1,0 +1,15 @@
+- name: Prepare infrastructure
+  hosts: virtual_machines
+  become: true
+  roles:
+    - role: bootstrap
+      tags:
+        - bootstrap
+
+- name: Install docker 
+  hosts: virtual_machines
+  become: true
+  roles: 
+    - role: docker 
+      tags:
+        - docker
