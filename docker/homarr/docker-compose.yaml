@@ -1,0 +1,15 @@
+services:
+
+  homarr:
+    image: ghcr.io/ajnart/homarr:latest
+    container_name: homarr
+    restart: unless-stopped
+    ports:
+      - "7575:7575"
+    volumes:
+      - /opt/docker/data/homarr/config:/app/data/configs
+      - /opt/docker/data/homarr/icons:/app/public/icons
+      - /opt/docker/data/homarr/data:/data
+    environment:
+      - TZ=Europe/Warsaw
+  
