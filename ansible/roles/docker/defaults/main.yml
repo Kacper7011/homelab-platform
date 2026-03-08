@@ -2,11 +2,13 @@
 # defaults file for docker
 
 apt_key_dir: /etc/apt/keyrings
-gpg_key_url: https://download.docker.com/linux/ubuntu/gpg
+
+gpg_key_url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
 docker_sources: /etc/apt/sources.list.d/docker.sources
+
 docker_sources_content: |
   Types: deb
-  URIs: https://download.docker.com/linux/ubuntu
+  URIs: https://download.docker.com/linux/{{ ansible_distribution | lower }}
   Suites: {{ ansible_distribution_release }}
   Components: stable
-  Signed-By: /etc/apt/keyrings/docker.asc
+  Signed-By: {{ apt_key_dir }}/docker.asc
