@@ -4,9 +4,17 @@ http:
       rule: "Host(`music.kacper-nxn.pl`)"
       entrypoints: ["web"]
       service: navidrome-svc
+    seafile:
+      rule: "Host(`seafile.kacper-nxn.pl`)"
+      entrypoints: ["web"]
+      service: seafile-svc
 
   services:
     navidrome-svc:
       loadBalancer:
         servers:
           - url: "http://10.10.10.115:4533"
+    seafile-svc:
+      loadBalancer:
+        servers:
+          - url: "http://10.10.10.115:9000"
