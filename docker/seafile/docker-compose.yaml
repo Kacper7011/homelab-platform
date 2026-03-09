@@ -1,0 +1,32 @@
+services:
+
+  db:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - /srv/seafile/mysql:/var/lib/mysql
+
+  memcached:
+    image: memcached:1.6
+    restart: always
+    command: memcached -m 256
+
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    restart: always
+    ports:
+      - "9000:80"
+    volumes:
+      - /srv/seafile/data:/shared
+    environment:
+      DB_HOST: db
+      DB_ROOT_PASSWD: ${MYSQL_ROOT_PASSWORD}
+      SEAFILE_ADMIN_EMAIL: ${SEAFILE_ADMIN_EMAIL}
+      SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
+      SEAFILE_SERVER_HOSTNAME: ${SEAFILE_SERVER_HOSTNAME}
+      TIME_ZONE: ${TIME_ZONE}
+    depends_on:
+      - db
+      - memcached
