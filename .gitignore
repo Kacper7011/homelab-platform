@@ -69,3 +69,9 @@ temp/
 
 # Bash history
 .bash_history
+
+# Homarr
+docker/homarr/data/
+docker/homarr/configs/
+homarr/icons/
+homarr/backgrounds/

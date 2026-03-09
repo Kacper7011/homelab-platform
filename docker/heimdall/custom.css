@@ -1,0 +1,20 @@
+input[type="text"],
+input[type="search"],
+input[type="url"],
+input[type="password"],
+.form-control,
+select {
+  background:#3a3d45 !important;
+  border:none !important;
+  border-left:1px solid rgba(0,200,255,0.1) !important;
+  color:#e2e8f0 !important;
+  font-family:'JetBrains Mono',monospace !important;
+  font-size:0.85rem !important;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+.form-control:focus{
+  border-color:#00c8ff !important;
+  outline:none !important;
+}
