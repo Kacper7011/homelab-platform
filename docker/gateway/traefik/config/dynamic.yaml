@@ -8,6 +8,18 @@ http:
       rule: "Host(`seafile.kacper-nxn.pl`)"
       entrypoints: ["web"]
       service: seafile-svc
+      middlewares:
+        - seafile-headers
+
+  middlewares:
+    seafile-headers:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: "http"
+          X-Real-IP: ""
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+          - "X-Forwarded-For"
 
   services:
     navidrome-svc:
@@ -18,3 +30,4 @@ http:
       loadBalancer:
         servers:
           - url: "http://10.10.10.115:9000"
+        passHostHeader: true
