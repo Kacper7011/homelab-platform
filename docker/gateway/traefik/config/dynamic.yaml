@@ -1,13 +1,13 @@
 http:
   routers:
-    # --- Router: Navidrome ---
+    # Router: Navidrome
     navidrome:
       rule: "Host(`music.kacper-nxn.pl`)"
       entryPoints:
         - web
       service: navidrome-svc
 
-    # --- Router: Seafile ---
+    # Router: Seafile
     seafile:
       rule: "Host(`seafile.kacper-nxn.pl`)"
       entryPoints:
@@ -16,16 +16,14 @@ http:
       middlewares:
         - seafile-headers
 
-    # --- Router: Vaultwarden ---
+    # Router: Vaultwarden
     vaultwarden:
       rule: "Host(`warden.kacper-nxn.pl`)"
       entryPoints:
-        - websecure
+        - web
       service: vaultwarden-svc
-      tls:
-        certResolver: cloudflare
 
-  # --- Middlewares (Dla specyficznych aplikacji) ---
+  # Middlewares
   middlewares:
     seafile-headers:
       headers:
@@ -35,7 +33,7 @@ http:
           - "X-Forwarded-Host"
           - "X-Forwarded-For"
 
-  # --- Services (Definicja backendów) ---
+  # Services
   services:
     navidrome-svc:
       loadBalancer:
