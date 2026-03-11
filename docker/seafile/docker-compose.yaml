@@ -15,6 +15,7 @@ services:
 
   seafile:
     image: seafileltd/seafile-mc:latest
+    container_name: seafile
     restart: always
     ports:
       - "9000:80"
@@ -27,6 +28,9 @@ services:
       SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
       SEAFILE_SERVER_HOSTNAME: ${SEAFILE_SERVER_HOSTNAME}
       TIME_ZONE: ${TIME_ZONE}
+      SEAFILE_SERVER_LETSENCRYPT: "false"
+      SERVICE_URL: "http://seafile.kacper-nxn.pl"
+      FILE_SERVER_ROOT: "http://seafile.kacper-nxn.pl/seafhttp"
     depends_on:
       - db
       - memcached
