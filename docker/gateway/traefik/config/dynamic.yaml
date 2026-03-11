@@ -1,33 +1,55 @@
 http:
   routers:
+    # --- Router: Navidrome ---
     navidrome:
       rule: "Host(`music.kacper-nxn.pl`)"
-      entrypoints: ["web"]
+      entryPoints:
+        - web
       service: navidrome-svc
+
+    # --- Router: Seafile ---
     seafile:
       rule: "Host(`seafile.kacper-nxn.pl`)"
-      entrypoints: ["web"]
+      entryPoints:
+        - web
       service: seafile-svc
       middlewares:
         - seafile-headers
 
+    # --- Router: Vaultwarden ---
+    vaultwarden:
+      rule: "Host(`warden.kacper-nxn.pl`)"
+      entryPoints:
+        - websecure
+      service: vaultwarden-svc
+      tls:
+        certResolver: cloudflare
+
+  # --- Middlewares (Dla specyficznych aplikacji) ---
   middlewares:
     seafile-headers:
       headers:
         customRequestHeaders:
           X-Forwarded-Proto: "http"
-          X-Real-IP: ""
         hostsProxyHeaders:
           - "X-Forwarded-Host"
           - "X-Forwarded-For"
 
+  # --- Services (Definicja backendów) ---
   services:
     navidrome-svc:
       loadBalancer:
         servers:
           - url: "http://10.10.10.115:4533"
+
     seafile-svc:
       loadBalancer:
         servers:
           - url: "http://10.10.10.115:9000"
+        passHostHeader: true
+
+    vaultwarden-svc:
+      loadBalancer:
+        servers:
+          - url: "http://10.10.10.115:8000"
         passHostHeader: true
