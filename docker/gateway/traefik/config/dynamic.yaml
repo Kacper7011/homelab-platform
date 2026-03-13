@@ -23,7 +23,7 @@ http:
         - web
       service: vaultwarden-svc
 
-  # Middlewares
+  #  Middlewares
   middlewares:
     seafile-headers:
       headers:
