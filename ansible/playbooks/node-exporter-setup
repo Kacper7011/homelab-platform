@@ -1,7 +1,8 @@
-- hosts: virtual_machines
+- hosts: virtual_machines,proxmox_nodes
   become: true
   vars: 
     version: "1.8.2"
+    arch: "amd64"
 
   tasks:
 
@@ -15,13 +16,13 @@
     
     - name: Install node_exporter
       ansible.builtin.unarchive:
-        src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-amd64.tar.gz"
+        src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ arch }}.tar.gz"
         dest: /tmp
         remote_src: yes
 
     - name: Copy binary in to /usr/local/bin
       ansible.builtin.copy:
-        src: "/tmp/node_exporter-{{ version }}.linux-amd64/node_exporter"
+        src: "/tmp/node_exporter-{{ version }}.linux-{{ arch }}/node_exporter"
         dest: /usr/local/bin/node_exporter
         mode: '0755'
         owner: node_exporter
@@ -40,7 +41,13 @@
           User=node_exporter
           Group=node_exporter
           Type=simple
-          ExecStart=/usr/local/bin/node_exporter
+          ExecStart=/usr/local/bin/node_exporter \
+            --collector.systemd \
+            --collector.processes \
+            --collector.filesystem.mount-points-exclude="^/(dev|proc|sys|var/lib/docker/.+)($|/)" \
+            {% if 'pve' in inventory_hostname or ansible_distribution == 'Debian' %}
+            --collector.zfs \
+            {% endif %}
 
           [Install]
           WantedBy=multi-user.target
