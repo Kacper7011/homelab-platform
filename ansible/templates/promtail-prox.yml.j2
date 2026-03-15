@@ -1,0 +1,30 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://{{ monitoring_ip }}:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: "journal"
+    journal:
+      max_age: 12h
+      path: /var/log/journal
+      labels:
+        job: "system"
+        host: "{{ inventory_hostname }}"
+    pipeline_stages:
+      - labels:
+          unit: "__journal__systemd_unit"
+          level: "__journal_priority_keyword"
+
+  - job_name: "pve-tasks"
+    static_configs:
+      - targets: ["localhost"]
+        labels:
+          job: "pve-tasks"
+          host: "{{ inventory_hostname }}"
+          __path__: /var/log/pve/tasks/*
