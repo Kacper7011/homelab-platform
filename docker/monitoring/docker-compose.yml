@@ -32,24 +32,7 @@ services:
       - "${LOKI_PORT:-3100}:3100"
     networks:
       - monitoring
-
-  # Promtail
-  promtail:
-    image: grafana/promtail:latest
-    container_name: promtail
-    restart: unless-stopped
-    environment:
-      HOSTNAME: "${HOSTNAME}"
-    volumes:
-      - ./promtail/promtail.yml:/etc/promtail/promtail.yml:ro
-      - /var/log:/var/log:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    command: -config.file=/etc/promtail/promtail.yml
-    depends_on:
-      - loki
-    networks:
-      - monitoring
-
+      
   # Grafana
   grafana:
     image: grafana/grafana:latest
