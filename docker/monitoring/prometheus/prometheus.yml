@@ -11,6 +11,7 @@ scrape_configs:
   - job_name: "node-exporter"
     static_configs:
 
+    # Proxmox nodes
       - targets: ["10.10.10.31:9100"]
         labels:
           nodename: "pve01"
@@ -22,3 +23,25 @@ scrape_configs:
       - targets: ["10.10.10.33:9100"]
         labels:
           nodename: "pve03"
+
+    # Virtual machines
+      - targets: ["10.10.10.115:9100"]
+        labels:
+          nodename: "prox-services"
+      
+      - targets: ["10.10.10.189:9100"]
+        labels:
+          nodename: "prox-gateway"
+
+      - targets: ["10.10.10.114:9100"]
+        labels:
+          nodename: "prox-tailscale"
+
+      - targets: ["10.10.10.107:9100"]
+        labels: 
+          nodename: "prox-monitoring"
+
+    # LXC containers
+      - targets: ["10.10.10.200:9100"]
+        labels:
+          nodename: "prox-adguard"
