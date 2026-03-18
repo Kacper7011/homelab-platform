@@ -1,0 +1,24 @@
+- hosts: virtual_machines
+  become: true 
+  vars:
+    image_version: v0.55.1
+    port: 6060
+  tasks:
+
+    - name: Create cadvisor directory
+      ansible.builtin.file:
+        path: /opt/cadvisor 
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Deploy cadvisor docker-compose
+      ansible.builtin.template:
+        src: ../templates/cadvisor-compose.yaml.j2
+        dest: /opt/cadvisor/docker-compose.yaml
+
+    - name: Run cadvisor docker-compose 
+      community.docker.docker_compose_v2:
+        project_src: /opt/cadvisor/
+        state: present
