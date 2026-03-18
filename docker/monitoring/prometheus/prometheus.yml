@@ -7,7 +7,7 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-# Monitored VM's and lxc containers
+# node-exporter job
   - job_name: "node-exporter"
     static_configs:
 
@@ -41,7 +41,30 @@ scrape_configs:
         labels: 
           nodename: "prox-monitoring"
 
+      - targets: ["10.10.10.140:9100"]
+        labels:
+          nodename: "prox-testing"
+
     # LXC containers
       - targets: ["10.10.10.200:9100"]
         labels:
           nodename: "prox-adguard"
+
+# Cadvisor job
+  - job_name: "cadvisor"
+    static_configs:
+
+    # Docker containers
+      - targets: ["10.10.10.115:6060"]
+        labels:
+          nodename: "prox-services"
+      
+      - targets: ["10.10.10.189:6060"]
+        labels:
+          nodename: "prox-gateway"
+      
+      - targets: ["10.10.10.107:6060"]
+        labels:
+          nodename: "prox-monitoring"
+
+      
