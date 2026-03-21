@@ -42,9 +42,9 @@
         mode: '0640'
         content: |
           default:
-            user: {{ pve_exporter_token_id }}
-            token_name: "{{ pve_exporter_token_id.split('!')[1] }}"
-            token_value: "{{ pve_exporter_token_secret }}"
+            user: {{ pve_exporter_user }}
+            token_name: {{ pve_exporter_token_name }}
+            token_value: {{ pve_exporter_token_secret }}
             verify_ssl: false
     
     - name: Create systemd service
