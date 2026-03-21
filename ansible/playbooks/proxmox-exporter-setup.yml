@@ -1,0 +1,76 @@
+- hosts: proxmox_nodes
+  become: true 
+  vars:
+    version: "3.8.1"
+  
+  tasks:
+
+    - name: Install python3 and pip
+      ansible.builtin.apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+        state: present
+      
+    - name: Create pve_exporter user
+      ansible.builtin.user:
+        name: pve_exporter
+        shell: /usr/sbin/nologin
+        system: true 
+        create_home: false
+    
+    - name: Create virtual env and install prometheus-pve-exporter
+      ansible.builtin.pip:
+        name: "prometheus-pve-exporter=={{ version }}"
+        virtualenv: /opt/pve_exporter/venv
+        virtualenv_command: python3 -m venv
+    
+    - name: Create config directory
+      ansible.builtin.file:
+        path: /etc/pve_exporter
+        state: directory
+        owner: pve_exporter
+        group: pve_exporter
+        mode: '0755'
+
+    - name: Create pve_exporter config
+      ansible.builtin.copy:
+        dest: /etc/pve_exporter/pve.yml
+        owner: pve_exporter
+        group: pve_exporter
+        mode: '0640'
+        content: |
+          default:
+            user: {{ pve_exporter_token_id }}
+            token_name: "{{ pve_exporter_token_id.split('!')[1] }}"
+            token_value: "{{ pve_exporter_token_secret }}"
+            verify_ssl: false
+    
+    - name: Create systemd service
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/pve_exporter.service
+        content: |
+          [Unit]
+          Description=Proxmox VE Exporter
+          After=network.target
+
+          [Service]
+          User=pve_exporter
+          Group=pve_exporter
+          Type=simple
+          ExecStart=/opt/pve_exporter/venv/bin/pve_exporter \
+            --config.file /etc/pve_exporter/pve.yml \
+            --web.listen-address 0.0.0.0:9221
+          Restart=always
+          RestartSec=5
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Start pve_exporter 
+      ansible.builtin.systemd:
+        name: pve_exporter 
+        state: restarted
+        enabled: true 
+        daemon_reload: true         
