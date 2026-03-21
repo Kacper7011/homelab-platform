@@ -14,6 +14,8 @@ services:
       - "--storage.tsdb.retention.time=30d"
       - "--web.console.libraries=/etc/prometheus/console_libraries"
       - "--web.console.templates=/etc/prometheus/consoles"
+      - "--query.lookback-delta=5m"
+      - "--web.enable-admin-api"
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     networks:

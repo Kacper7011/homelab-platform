@@ -7,22 +7,42 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-# node-exporter job
-  - job_name: "node-exporter"
+# pve-exporter job
+
+  # proxmox nodes
+  - job_name: "pve-exporter"
+    metrics_path: /pve
+    params:
+      module: [default]
+      cluster: ["1"]
+      node: ["1"]
     static_configs:
 
-    # Proxmox nodes
-      - targets: ["10.10.10.31:9100"]
+      - targets: ["10.10.10.31"]
         labels:
           nodename: "pve01"
 
-      - targets: ["10.10.10.32:9100"]
+      - targets: ["10.10.10.32"]
         labels:
           nodename: "pve02"
 
-      - targets: ["10.10.10.33:9100"]
+      - targets: ["10.10.10.33"]
         labels:
           nodename: "pve03"
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: "10.10.10.31:9221"
+      - source_labels: [nodename]
+        target_label: instance
+
+# node-exporter job
+  - job_name: "node-exporter"
+    static_configs:
 
     # Virtual machines
       - targets: ["10.10.10.115:9100"]
