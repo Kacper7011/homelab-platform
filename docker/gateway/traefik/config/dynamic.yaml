@@ -23,6 +23,12 @@ http:
         - web
       service: vaultwarden-svc
 
+    forgejo:
+      rule: "Host(`git.kacper-nxn.pl`)"
+      entryPoints:
+        - web
+      service: forgejo-svc
+
   #  Middlewares
   middlewares:
     seafile-headers:
@@ -50,4 +56,10 @@ http:
       loadBalancer:
         servers:
           - url: "http://10.10.10.115:8000"
+        passHostHeader: true
+
+    forgejo-svc:
+      loadBalancer:
+        servers:
+          - url: "http://10.10.10.249:3000"
         passHostHeader: true
