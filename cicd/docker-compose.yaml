@@ -1,0 +1,44 @@
+services:
+# forgejo
+  forgejo:
+    container_name: forgejo
+    image: codeberg.org/forgejo/forgejo:14
+    environment:
+    - USER_UID=1000
+    - USER_GID=1000
+    restart: unless-stopped
+    networks: 
+      - forgejo
+    volumes:
+      - forgejo_data:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '3000:3000'
+      - '222:22'
+
+# forgejo runner
+  runner:
+    container_name: forgejo_runner
+    image: data.forgejo.org/forgejo/runner:4.0.1
+    environment: 
+      - FORGEJO_INSTANCE_URL=http://forgejo:3000
+      - FORGEJO_RUNNER_REGISTRATION_TOKEN=${forgejo_token}
+    group_add:
+      - "998"
+    restart: unless-stopped
+    networks:
+      - forgejo
+    volumes:
+      - ./config.yml:/data/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >-
+      sh -c "if [ ! -f /data/.runner ]; then forgejo-runner register --no-interactive --instance $${FORGEJO_INSTANCE_URL} --token $${FORGEJO_RUNNER_REGISTRATION_TOKEN} --name homelab-runner --config /data/config.yml; fi && forgejo-runner daemon --config /data/config.yml"
+
+volumes:
+  forgejo_data:
+
+networks:
+  forgejo:
+    name: forgejo
+    external: false
+    
