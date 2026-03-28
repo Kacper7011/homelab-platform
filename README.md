@@ -47,145 +47,9 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
 
 ---
 
-## Services
-
-### Gateway
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/traefikproxy" width="32" alt="Traefik" /></td>
-    <td><a href="https://traefik.io/">Traefik</a></td>
-    <td>Reverse proxy — routing, TLS, auto-discovery via Docker labels</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/cloudflare" width="32" alt="Cloudflare" /></td>
-    <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/">Cloudflared</a></td>
-    <td>Cloudflare Tunnel — secure external access without opening ports</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/tailscale" width="32" alt="Tailscale" /></td>
-    <td><a href="https://tailscale.com/">Tailscale</a></td>
-    <td>Zero-config VPN — secure access to the homelab from anywhere</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/adguard" width="32" alt="AdGuard Home" /></td>
-    <td><a href="https://adguard.com/en/adguard-home/overview.html">AdGuard Home</a></td>
-    <td>Network-wide DNS ad blocker and privacy filter</td>
-  </tr>
-</table>
-
-### Monitoring
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/prometheus" width="32" alt="Prometheus" /></td>
-    <td><a href="https://prometheus.io/">Prometheus</a></td>
-    <td>Metrics collection and storage (node exporter, cAdvisor, pve-exporter)</td>
-  </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png" width="32" alt="Loki" /></td>
-    <td><a href="https://grafana.com/oss/loki/">Loki</a></td>
-    <td>Log aggregation from machines and containers</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/grafana" width="32" alt="Grafana" /></td>
-    <td><a href="https://grafana.com/">Grafana</a></td>
-    <td>Dashboards and visualization for metrics and logs</td>
-  </tr>
-</table>
-
-![Grafana placeholder – screenshot of metrics dashboard](docs/screenshots/grafana.png)
-
-### CI/CD
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" /></td>
-    <td><a href="https://forgejo.org/">Forgejo</a></td>
-    <td>Self-hosted Git — repositories and code review</td>
-  </tr>
-  <tr>
-    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo Runner" /></td>
-    <td><a href="https://code.forgejo.org/forgejo/runner">Forgejo Runner</a></td>
-    <td>CI/CD pipeline runner (Docker-in-Docker)</td>
-  </tr>
-</table>
-
-### Storage & Sync
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/seafile" width="32" alt="Seafile" /></td>
-    <td><a href="https://www.seafile.com/">Seafile</a></td>
-    <td>Self-hosted file storage — alternative to Google Drive / Dropbox</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/syncthing" width="32" alt="Syncthing" /></td>
-    <td><a href="https://syncthing.net/">Syncthing</a></td>
-    <td>Peer-to-peer file sync between devices</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/bitwarden" width="32" alt="Vaultwarden" /></td>
-    <td><a href="https://github.com/dani-garcia/vaultwarden">Vaultwarden</a></td>
-    <td>Self-hosted password manager (Bitwarden compatible)</td>
-  </tr>
-</table>
-
-### Media
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png" width="32" alt="Navidrome" /></td>
-    <td><a href="https://www.navidrome.org/">Navidrome</a></td>
-    <td>Self-hosted music server, Subsonic-compatible</td>
-  </tr>
-</table>
-
-### Dashboard
-
-<table>
-  <tr>
-    <th>Logo</th>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/linuxserver/Heimdall/master/public/android-icon-192x192.png" width="32" alt="Heimdall" /></td>
-    <td><a href="https://heimdall.site/">Heimdall</a></td>
-    <td>Start page with links to all services</td>
-  </tr>
-</table>
-
-![Heimdall placeholder – screenshot of the dashboard](docs/screenshots/heimdall.png)
-
----
-
 ## Tech Stack
+
+Infrastructure foundations — the tools that make everything run.
 
 <table>
   <tr>
@@ -215,7 +79,7 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
   </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/cloudflare" width="32" alt="Cloudflare" /></td>
-    <td><a href="https://www.cloudflare.com/">Cloudflare</a></td>
+    <td><a href="https://www.cloudflare.com/">Cloudflare + Cloudflared</a></td>
     <td>DNS, tunnel and TLS certificate management</td>
   </tr>
   <tr>
@@ -223,52 +87,70 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
     <td><a href="https://tailscale.com/">Tailscale</a></td>
     <td>Zero-config VPN for secure remote access</td>
   </tr>
+</table>
+
+---
+
+## Services
+
+Hosted applications running on top of the infrastructure.
+
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/adguard" width="32" alt="AdGuard Home" /></td>
     <td><a href="https://adguard.com/en/adguard-home/overview.html">AdGuard Home</a></td>
-    <td>Network-wide DNS ad blocking</td>
+    <td>DNS / ad blocking — network-wide privacy filter</td>
   </tr>
   <tr>
-    <td><img src="https://cdn.simpleicons.org/prometheus" width="32" alt="Prometheus" /></td>
-    <td><a href="https://prometheus.io/">Prometheus</a></td>
-    <td>Metrics collection and alerting</td>
+    <td>
+      <img src="https://cdn.simpleicons.org/prometheus" width="32" alt="Prometheus" />
+      <img src="https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png" width="32" alt="Loki" />
+      <img src="https://cdn.simpleicons.org/grafana" width="32" alt="Grafana" />
+    </td>
+    <td><a href="https://prometheus.io/">Prometheus</a> + <a href="https://grafana.com/oss/loki/">Loki</a> + <a href="https://grafana.com/">Grafana</a></td>
+    <td>Monitoring & observability — metrics, logs and dashboards</td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png" width="32" alt="Loki" /></td>
-    <td><a href="https://grafana.com/oss/loki/">Loki</a></td>
-    <td>Log aggregation and storage</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/grafana" width="32" alt="Grafana" /></td>
-    <td><a href="https://grafana.com/">Grafana</a></td>
-    <td>Metrics and logs visualization</td>
-  </tr>
-  <tr>
-    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" /></td>
-    <td><a href="https://forgejo.org/">Forgejo</a></td>
-    <td>Self-hosted Git platform</td>
+    <td>
+      <img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" />
+      <img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo Runner" />
+    </td>
+    <td><a href="https://forgejo.org/">Forgejo</a> + <a href="https://code.forgejo.org/forgejo/runner">Forgejo Runner</a></td>
+    <td>Git & CI/CD — self-hosted repositories and pipelines</td>
   </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/seafile" width="32" alt="Seafile" /></td>
     <td><a href="https://www.seafile.com/">Seafile</a></td>
-    <td>Self-hosted file sync and storage</td>
+    <td>File storage — self-hosted alternative to Google Drive / Dropbox</td>
   </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/syncthing" width="32" alt="Syncthing" /></td>
     <td><a href="https://syncthing.net/">Syncthing</a></td>
-    <td>Peer-to-peer file synchronization</td>
+    <td>File sync — peer-to-peer synchronization between devices</td>
   </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/bitwarden" width="32" alt="Vaultwarden" /></td>
     <td><a href="https://github.com/dani-garcia/vaultwarden">Vaultwarden</a></td>
-    <td>Self-hosted password manager</td>
+    <td>Password manager — self-hosted, Bitwarden compatible</td>
   </tr>
   <tr>
     <td><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png" width="32" alt="Navidrome" /></td>
     <td><a href="https://www.navidrome.org/">Navidrome</a></td>
-    <td>Self-hosted music streaming server</td>
+    <td>Music streaming — self-hosted, Subsonic-compatible</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/linuxserver/Heimdall/master/public/android-icon-192x192.png" width="32" alt="Heimdall" /></td>
+    <td><a href="https://heimdall.site/">Heimdall</a></td>
+    <td>Dashboard — start page with links to all services</td>
   </tr>
 </table>
+
+![Heimdall placeholder – screenshot of the dashboard](docs/screenshots/heimdall.png)
 
 ---
 
