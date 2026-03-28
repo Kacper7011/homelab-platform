@@ -125,7 +125,7 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
     <th>Description</th>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/haiwen/seafile-client/master/data/icons/256/seafile.png" width="32" alt="Seafile" /></td>
+    <td><img src="https://avatars.githubusercontent.com/u/1205350" width="32" alt="Seafile" /></td>
     <td><a href="https://www.seafile.com/">Seafile</a></td>
     <td>Self-hosted file storage — alternative to Google Drive / Dropbox</td>
   </tr>
@@ -165,7 +165,7 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
     <th>Description</th>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/linuxserver/Heimdall/master/public/img/heimdall-logo.png" width="32" alt="Heimdall" /></td>
+    <td><img src="https://raw.githubusercontent.com/linuxserver/Heimdall/master/public/favicon.ico" width="32" alt="Heimdall" /></td>
     <td><a href="https://heimdall.site/">Heimdall</a></td>
     <td>Start page with links to all services</td>
   </tr>
@@ -177,15 +177,58 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
 
 ## Tech Stack
 
-| Category             | Technology                    |
-|----------------------|-------------------------------|
-| Hypervisor           | Proxmox VE                    |
-| Containers           | Docker + Docker Compose       |
-| Automation           | Ansible                       |
-| Reverse proxy / TLS  | Traefik + Cloudflare          |
-| Monitoring           | Prometheus + Loki + Grafana   |
-| CI/CD                | Forgejo + Forgejo Runner      |
-| Storage              | Seafile + Syncthing           |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Category</th>
+    <th>Technology</th>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/proxmox" width="32" alt="Proxmox" /></td>
+    <td>Hypervisor</td>
+    <td>Proxmox VE</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/docker" width="32" alt="Docker" /></td>
+    <td>Containers</td>
+    <td>Docker + Docker Compose</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/ansible" width="32" alt="Ansible" /></td>
+    <td>Automation</td>
+    <td>Ansible</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://cdn.simpleicons.org/traefikproxy" width="32" alt="Traefik" />
+      <img src="https://cdn.simpleicons.org/cloudflare" width="32" alt="Cloudflare" />
+    </td>
+    <td>Reverse proxy / TLS</td>
+    <td>Traefik + Cloudflare</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://cdn.simpleicons.org/prometheus" width="32" alt="Prometheus" />
+      <img src="https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png" width="32" alt="Loki" />
+      <img src="https://cdn.simpleicons.org/grafana" width="32" alt="Grafana" />
+    </td>
+    <td>Monitoring</td>
+    <td>Prometheus + Loki + Grafana</td>
+  </tr>
+  <tr>
+    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" /></td>
+    <td>CI/CD</td>
+    <td>Forgejo + Forgejo Runner</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://avatars.githubusercontent.com/u/1205350" width="32" alt="Seafile" />
+      <img src="https://cdn.simpleicons.org/syncthing" width="32" alt="Syncthing" />
+    </td>
+    <td>Storage</td>
+    <td>Seafile + Syncthing</td>
+  </tr>
+</table>
 
 ---
 
