@@ -118,7 +118,6 @@ Hosted applications running on top of the infrastructure.
   <tr>
     <td>
       <img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" />
-      <img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo Runner" />
     </td>
     <td><a href="https://forgejo.org/">Forgejo</a> + <a href="https://code.forgejo.org/forgejo/runner">Forgejo Runner</a></td>
     <td>Git & CI/CD — self-hosted repositories and pipelines</td>
