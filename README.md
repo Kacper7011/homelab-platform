@@ -9,7 +9,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue?logo=docker)](https://docs.docker.com/compose/)
 [![Ansible](https://img.shields.io/badge/Ansible-automation-red?logo=ansible)](https://www.ansible.com/)
 
-![Overview placeholder – screenshot of Heimdall or Grafana dashboard](docs/screenshots/overview.png)
+![Heimdall dashboard – all services at a glance](docs/screenshots/heimdall.png)
 
 </div>
 
@@ -37,11 +37,11 @@ This homelab was built to learn new technologies and create a personal infrastru
 
 All three nodes form a **Proxmox VE** cluster, which runs virtual machines that host the individual service stacks.
 
+![Proxmox cluster overview – 3 nodes, resource usage](docs/screenshots/proxmox.png)
+
 ---
 
 ## Architecture
-
-![Architecture placeholder – network / VM layout diagram](docs/screenshots/architecture.png)
 
 Each service stack runs on a separate **virtual machine** inside the Proxmox cluster. External traffic goes through a Cloudflare Tunnel to Traefik, which acts as a reverse proxy and handles TLS termination. Metrics and logs are collected centrally by the monitoring stack.
 
@@ -150,7 +150,8 @@ Hosted applications running on top of the infrastructure.
   </tr>
 </table>
 
-![Heimdall placeholder – screenshot of the dashboard](docs/screenshots/heimdall.png)
+![Grafana dashboard – cluster metrics and VM overview](docs/screenshots/grafana.png)
+
 
 ---
 
