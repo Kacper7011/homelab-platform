@@ -51,45 +51,127 @@ Each service stack runs on a separate **virtual machine** inside the Proxmox clu
 
 ### Gateway
 
-| Service      | Description                                                        |
-|--------------|--------------------------------------------------------------------|
-| [Traefik](https://traefik.io/) | Reverse proxy — routing, TLS, auto-discovery via Docker labels |
-| [Cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) | Cloudflare Tunnel — secure external access without opening ports |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/traefikproxy" width="32" alt="Traefik" /></td>
+    <td><a href="https://traefik.io/">Traefik</a></td>
+    <td>Reverse proxy — routing, TLS, auto-discovery via Docker labels</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/cloudflare" width="32" alt="Cloudflare" /></td>
+    <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/">Cloudflared</a></td>
+    <td>Cloudflare Tunnel — secure external access without opening ports</td>
+  </tr>
+</table>
 
 ### Monitoring
 
-| Service         | Description                                                   |
-|-----------------|---------------------------------------------------------------|
-| [Prometheus](https://prometheus.io/) | Metrics collection and storage (node exporter, cAdvisor, pve-exporter) |
-| [Loki](https://grafana.com/oss/loki/) | Log aggregation from machines and containers               |
-| [Grafana](https://grafana.com/) | Dashboards and visualization for metrics and logs          |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/prometheus" width="32" alt="Prometheus" /></td>
+    <td><a href="https://prometheus.io/">Prometheus</a></td>
+    <td>Metrics collection and storage (node exporter, cAdvisor, pve-exporter)</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png" width="32" alt="Loki" /></td>
+    <td><a href="https://grafana.com/oss/loki/">Loki</a></td>
+    <td>Log aggregation from machines and containers</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/grafana" width="32" alt="Grafana" /></td>
+    <td><a href="https://grafana.com/">Grafana</a></td>
+    <td>Dashboards and visualization for metrics and logs</td>
+  </tr>
+</table>
+
+![Grafana placeholder – screenshot of metrics dashboard](docs/screenshots/grafana.png)
 
 ### CI/CD
 
-| Service            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| [Forgejo](https://forgejo.org/) | Self-hosted Git — repositories and code review         |
-| [Forgejo Runner](https://code.forgejo.org/forgejo/runner) | CI/CD pipeline runner (Docker-in-Docker)            |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo" /></td>
+    <td><a href="https://forgejo.org/">Forgejo</a></td>
+    <td>Self-hosted Git — repositories and code review</td>
+  </tr>
+  <tr>
+    <td><img src="https://forgejo.org/favicon.ico" width="32" alt="Forgejo Runner" /></td>
+    <td><a href="https://code.forgejo.org/forgejo/runner">Forgejo Runner</a></td>
+    <td>CI/CD pipeline runner (Docker-in-Docker)</td>
+  </tr>
+</table>
 
 ### Storage & Sync
 
-| Service        | Description                                                       |
-|----------------|-------------------------------------------------------------------|
-| [Seafile](https://www.seafile.com/) | Self-hosted file storage — alternative to Google Drive / Dropbox |
-| [Syncthing](https://syncthing.net/) | Peer-to-peer file sync between devices                        |
-| [Vaultwarden](https://github.com/dani-garcia/vaultwarden) | Self-hosted password manager (Bitwarden compatible)        |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/haiwen/seafile-client/master/data/icons/256/seafile.png" width="32" alt="Seafile" /></td>
+    <td><a href="https://www.seafile.com/">Seafile</a></td>
+    <td>Self-hosted file storage — alternative to Google Drive / Dropbox</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/syncthing" width="32" alt="Syncthing" /></td>
+    <td><a href="https://syncthing.net/">Syncthing</a></td>
+    <td>Peer-to-peer file sync between devices</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/bitwarden" width="32" alt="Vaultwarden" /></td>
+    <td><a href="https://github.com/dani-garcia/vaultwarden">Vaultwarden</a></td>
+    <td>Self-hosted password manager (Bitwarden compatible)</td>
+  </tr>
+</table>
 
 ### Media
 
-| Service        | Description                                                  |
-|----------------|--------------------------------------------------------------|
-| [Navidrome](https://www.navidrome.org/) | Self-hosted music server, Subsonic-compatible           |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png" width="32" alt="Navidrome" /></td>
+    <td><a href="https://www.navidrome.org/">Navidrome</a></td>
+    <td>Self-hosted music server, Subsonic-compatible</td>
+  </tr>
+</table>
 
 ### Dashboard
 
-| Service     | Description                                      |
-|-------------|--------------------------------------------------|
-| [Heimdall](https://heimdall.site/) | Start page with links to all services         |
+<table>
+  <tr>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/linuxserver/Heimdall/master/public/img/heimdall-logo.png" width="32" alt="Heimdall" /></td>
+    <td><a href="https://heimdall.site/">Heimdall</a></td>
+    <td>Start page with links to all services</td>
+  </tr>
+</table>
+
+![Heimdall placeholder – screenshot of the dashboard](docs/screenshots/heimdall.png)
 
 ---
 
@@ -157,4 +239,4 @@ ansible-playbook -i inventories/hosts.yml playbooks/node-exporter-setup.yml
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) — feel free to use anything here as inspiration for your own homelab.
