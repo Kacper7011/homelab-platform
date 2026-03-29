@@ -1,0 +1,29 @@
+---
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+    uptime: true
+    units: metric
+    refresh: 3000
+    label: System
+
+- search:
+    provider: google
+    target: _blank
+
+- datetime:
+    text_size: l
+    format:
+      timeStyle: short
+      dateStyle: short
+      hourCycle: h23
+      locale: en-GB
+
+- openmeteo:
+    label: Elblag
+    latitude: 54.1523
+    longitude: 19.4088
+    units: metric
+    cache: 15
+

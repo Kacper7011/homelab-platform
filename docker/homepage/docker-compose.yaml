@@ -1,0 +1,17 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    env_file:
+      - .env
+    user: "1000:999"
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: "*"
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/kacper/images:/app/public/images 
+    restart: unless-stopped

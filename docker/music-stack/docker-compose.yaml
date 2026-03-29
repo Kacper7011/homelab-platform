@@ -7,6 +7,7 @@ services:
     ports:
       - "4533:4533"
     environment:
+      ND_ENABLELEGACYAUTH: "true"
       ND_SCANINTERVAL: 1m
       ND_LOGLEVEL: info
     volumes:

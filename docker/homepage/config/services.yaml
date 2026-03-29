@@ -1,0 +1,86 @@
+---
+- Infrastructure:
+    - Proxmox:
+        href: https://10.10.10.31:8006
+        description: Hypervisor
+        icon: proxmox.svg
+        widget:
+          type: proxmox
+          url: https://10.10.10.31:8006
+          username: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}"
+          password: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}"
+
+    - Traefik:
+        href: http://10.10.10.189:8080
+        description: Reverse Proxy
+        icon: traefik.svg
+        widget:
+          type: traefik
+          url: http://10.10.10.189:8080
+
+    - AdGuard Home:
+        href: http://10.10.10.200
+        description: DNS Ad Blocker
+        icon: adguard-home.svg
+        widget:
+          type: adguard
+          url: http://10.10.10.200
+          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+
+- Monitoring & logging:
+    - Grafana:
+        href: http://10.10.10.107:3000
+        description: Dashboards
+        icon: grafana.svg
+        widget:
+          type: grafana
+          url: http://10.10.10.107:3000
+          username: "{{HOMEPAGE_VAR_GRAFANA_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+
+    - Prometheus:
+        href: http://10.10.10.107:9090
+        description: Metrics
+        icon: prometheus.svg
+        widget:
+          type: prometheus
+          url: http://10.10.10.107:9090
+
+    - Loki:
+        href: http://10.10.10.107:3100
+        description: Logging
+        icon: loki.svg
+
+- Development:
+    - Forgejo:
+        href: https://git.kacper-nxn.pl
+        description: Git Hosting
+        icon: forgejo.svg
+        widget:
+          type: gitea
+          url: https://git.kacper-nxn.pl
+          key: "{{HOMEPAGE_VAR_FORGEJO_API_TOKEN}}"
+
+- Storage & Sync:
+    - Seafile:
+        href: https://seafile.kacper-nxn.pl
+        description: File Storage
+        icon: seafile.svg
+
+    - Syncthing:
+        href: http://10.10.10.115:8384
+        description: File Sync
+        icon: syncthing.svg
+
+- Media:
+    - Navidrome:
+        href: https://music.kacper-nxn.pl
+        description: Music Server
+        icon: navidrome.svg
+
+- Security:
+    - Vaultwarden:
+        href: https://warden.kacper-nxn.pl
+        description: Password Manager
+        icon: vaultwarden.svg

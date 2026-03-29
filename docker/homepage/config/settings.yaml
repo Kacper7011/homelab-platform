@@ -1,0 +1,31 @@
+---
+title: Homelab
+favicon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/homepage.png
+
+theme: dark
+color: neutral
+
+background:
+  image: /images/background.png
+  blur: sm
+  saturate: 70     
+  brightness: 50    
+  opacity: 100
+
+useEqualHeights: true
+iconstyle: gradient
+columns: 6
+
+layout:
+  Infrastructure:
+    style: column
+  Monitoring & logging:
+    style: column
+  Development:
+    style: column
+  Storage & Sync:
+    style: column
+  Media:
+    style: column
+  Security:
+    style: column
