@@ -1,26 +1,32 @@
 - hosts: virtual_machines,proxmox_nodes
   become: true
-  vars: 
+  vars:
     version: "1.8.2"
     arch: "amd64"
 
-  tasks:
+  handlers:
+    - name: Restart node_exporter
+      ansible.builtin.systemd:
+        name: node_exporter
+        state: restarted
+        daemon_reload: true
+        enabled: true
 
-    - name: Create node_exporter user 
+  tasks:
+    - name: Create node_exporter user
       ansible.builtin.user:
-        name: node_exporter 
+        name: node_exporter
         shell: /usr/sbin/nologin
         system: true
         create_home: false
 
-    
     - name: Install node_exporter
       ansible.builtin.unarchive:
         src: "https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ arch }}.tar.gz"
         dest: /tmp
         remote_src: yes
 
-    - name: Copy binary in to /usr/local/bin
+    - name: Copy binary into /usr/local/bin
       ansible.builtin.copy:
         src: "/tmp/node_exporter-{{ version }}.linux-{{ arch }}/node_exporter"
         dest: /usr/local/bin/node_exporter
@@ -29,32 +35,19 @@
         group: node_exporter
         remote_src: yes
 
-    - name: Create systemd service 
-      ansible.builtin.copy:
+    - name: Create systemd service
+      ansible.builtin.template:
+        src: ../templates/node_exporter.service.j2
         dest: /etc/systemd/system/node_exporter.service
-        content: |
-          [Unit]
-          Description=Node Exporter
-          After=network.target
+      notify: Restart node_exporter
 
-          [Service]
-          User=node_exporter
-          Group=node_exporter
-          Type=simple
-          ExecStart=/usr/local/bin/node_exporter \
-            --collector.systemd \
-            --collector.processes \
-            --collector.filesystem.mount-points-exclude="^/(dev|proc|sys|var/lib/docker/.+)($|/)" \
-            {% if 'pve' in inventory_hostname or ansible_distribution == 'Debian' %}
-            --collector.zfs \
-            {% endif %}
+    - name: Cleanup temp files
+      ansible.builtin.file:
+        path: "/tmp/node_exporter-{{ version }}.linux-{{ arch }}"
+        state: absent
 
-          [Install]
-          WantedBy=multi-user.target
-      
-    - name: start node-exporter
+    - name: Enable node_exporter
       ansible.builtin.systemd:
         name: node_exporter
-        state: restarted
+        state: started
         enabled: true
-        daemon_reload: true
