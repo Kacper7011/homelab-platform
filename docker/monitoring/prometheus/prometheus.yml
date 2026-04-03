@@ -7,6 +7,16 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
+# traefik
+  - job_name: "traefik"
+    static_configs:
+      - targets: ["10.10.10.204:8082"]
+
+# cloudflared
+  - job_name: "cloudflared"
+    static_configs:
+      - targets: ["10.10.10.204:2000"]
+
 # pve-exporter job
   - job_name: "pve-exporter"
     metrics_path: /pve
