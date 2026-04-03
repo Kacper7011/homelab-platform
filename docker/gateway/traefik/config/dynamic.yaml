@@ -24,7 +24,7 @@ http:
       service: vaultwarden-svc
 
     forgejo:
-      rule: "Host(`git.kacper-nxn.pl`)"
+      rule: "Host(`forgejo.kacper-nxn.pl`)"
       entryPoints:
         - web
       service: forgejo-svc
