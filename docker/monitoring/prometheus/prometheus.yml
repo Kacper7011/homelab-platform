@@ -62,14 +62,6 @@ scrape_configs:
         labels:
           nodename: "prox-services"
       
-      - targets: ["10.10.10.189:9100"]
-        labels:
-          nodename: "prox-gateway"
-
-      - targets: ["10.10.10.114:9100"]
-        labels:
-          nodename: "prox-tailscale"
-
       - targets: ["10.10.10.107:9100"]
         labels: 
           nodename: "prox-monitoring"
@@ -83,6 +75,9 @@ scrape_configs:
         labels:
           nodename: "prox-adguard"
 
+      - targets: ["10.10.10.204:9100"]
+        labels:
+          nodename: "prox-gateway"
 # Cadvisor job
   - job_name: "cadvisor"
     static_configs:
@@ -92,7 +87,7 @@ scrape_configs:
         labels:
           nodename: "prox-services"
       
-      - targets: ["10.10.10.189:6060"]
+      - targets: ["10.10.10.204:6060"]
         labels:
           nodename: "prox-gateway"
       
