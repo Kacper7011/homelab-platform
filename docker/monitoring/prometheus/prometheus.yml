@@ -10,12 +10,12 @@ scrape_configs:
 # traefik
   - job_name: "traefik"
     static_configs:
-      - targets: ["10.10.10.204:8082"]
+      - targets: ["10.10.10.224:8082"]
 
 # cloudflared
   - job_name: "cloudflared"
     static_configs:
-      - targets: ["10.10.10.204:2000"]
+      - targets: ["10.10.10.224:2000"]
 
 # pve-exporter job
   - job_name: "pve-exporter"
@@ -81,13 +81,22 @@ scrape_configs:
           nodename: "prox-cicd"
 
     # LXC containers
-      - targets: ["10.10.10.200:9100"]
+      - targets: ["10.10.10.50:9100"]
         labels:
-          nodename: "prox-adguard"
+          nodename: "prox-adguard-master"
 
-      - targets: ["10.10.10.204:9100"]
+      - targets: ["10.10.10.55:9100"]
+        labels:
+          nodename: "prox-adguard-backup"
+
+      - targets: ["10.10.10.224:9100"]
         labels:
           nodename: "prox-gateway"
+
+      - targets: ["10.10.10.70:9100"]
+        labels:
+          nodename: "prox-tailscale"
+
 # Cadvisor job
   - job_name: "cadvisor"
     static_configs:
@@ -97,7 +106,7 @@ scrape_configs:
         labels:
           nodename: "prox-services"
       
-      - targets: ["10.10.10.204:6060"]
+      - targets: ["10.10.10.224:6060"]
         labels:
           nodename: "prox-gateway"
       
