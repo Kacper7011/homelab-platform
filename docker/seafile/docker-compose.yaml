@@ -2,14 +2,16 @@ services:
 
   db:
     image: mariadb:10.11
+    container_name: mariadb
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    env_file:
+      - ~/.secrets/seafile/.env
     volumes:
       - /srv/seafile/mysql:/var/lib/mysql
 
   memcached:
     image: memcached:1.6
+    container_name: memcached
     restart: always
     command: memcached -m 256
 
@@ -21,13 +23,10 @@ services:
       - "9000:80"
     volumes:
       - /srv/seafile/data:/shared
+    env_file:
+      - ~/.secrets/seafile/.env
     environment:
       DB_HOST: db
-      DB_ROOT_PASSWD: ${MYSQL_ROOT_PASSWORD}
-      SEAFILE_ADMIN_EMAIL: ${SEAFILE_ADMIN_EMAIL}
-      SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
-      SEAFILE_SERVER_HOSTNAME: ${SEAFILE_SERVER_HOSTNAME}
-      TIME_ZONE: ${TIME_ZONE}
       SEAFILE_SERVER_LETSENCRYPT: "false"
       SERVICE_URL: "http://seafile.kacper-nxn.pl"
       FILE_SERVER_ROOT: "http://seafile.kacper-nxn.pl/seafhttp"

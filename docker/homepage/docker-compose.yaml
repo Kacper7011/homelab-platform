@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     env_file:
-      - .env
+      - ~/.secrets/homepage/.env
     user: "1000:999"
     environment:
       HOMEPAGE_ALLOWED_HOSTS: "*"

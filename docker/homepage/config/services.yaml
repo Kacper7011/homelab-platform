@@ -11,20 +11,30 @@
           password: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}"
 
     - Traefik:
-        href: http://10.10.10.189:8080
+        href: http://10.10.10.224:8080
         description: Reverse Proxy
         icon: traefik.svg
         widget:
           type: traefik
-          url: http://10.10.10.189:8080
+          url: http://10.10.10.224:8080
 
-    - AdGuard Home:
-        href: http://10.10.10.200
+    - AdGuard Home — Master:
+        href: http://10.10.10.50
         description: DNS Ad Blocker
         icon: adguard-home.svg
         widget:
           type: adguard
-          url: http://10.10.10.200
+          url: http://10.10.10.50
+          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+
+    - AdGuard Home — Backup:
+        href: http://10.10.10.55
+        description: DNS Ad Blocker
+        icon: adguard-home.svg
+        widget:
+          type: adguard
+          url: http://10.10.10.55
           username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
           password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
 
@@ -54,12 +64,12 @@
 
 - Development:
     - Forgejo:
-        href: https://git.kacper-nxn.pl
+        href: https://forgejo.kacper-nxn.pl
         description: Git Hosting
         icon: forgejo.svg
         widget:
           type: gitea
-          url: https://git.kacper-nxn.pl
+          url: https://forgejo.kacper-nxn.pl
           key: "{{HOMEPAGE_VAR_FORGEJO_API_TOKEN}}"
 
 - Storage & Sync:
