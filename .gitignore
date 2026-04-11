@@ -42,6 +42,11 @@ override.tf.json
 *.tfstate.lock.info
 .terragrunt-cache/
 
+# Hashicorp Vault
+vault/data/
+*.token
+unseal-keys.txt
+
 # Ansible
 hosts.yml
 *.retry

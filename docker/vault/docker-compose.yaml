@@ -1,0 +1,32 @@
+services:
+  vault:
+    image: hashicorp/vault:1.17
+    container_name: vault
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./config:/vault/config
+      - vault_data:/vault/data
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    cap_add:
+      - IPC_LOCK
+    command: server
+    networks:
+      - vault-net
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  vault-net:
+    name: vault-net
+    driver: bridge
+
+volumes:
+  vault_data:
+    name: vault_data
