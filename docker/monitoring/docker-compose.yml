@@ -17,7 +17,7 @@ services:
       - "--query.lookback-delta=5m"
       - "--web.enable-admin-api"
     ports:
-      - "${PROMETHEUS_PORT:-9090}:9090"
+      - "9090:9090"
     networks:
       - monitoring
 
@@ -31,7 +31,7 @@ services:
       - /mnt/monitoring/loki:/loki
     command: -config.file=/etc/loki/loki.yml
     ports:
-      - "${LOKI_PORT:-3100}:3100"
+      - "3100:3100"
     networks:
       - monitoring
 
@@ -40,16 +40,16 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
+    env_file:
+      - ~/.secrets/grafana/.env
     environment:
       - TZ=Europe/Warsaw
-      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - grafana_data:/var/lib/grafana
     ports:
-      - "${GRAFANA_PORT:-3000}:3000"
+      - "3000:3000"
     depends_on:
       - prometheus
       - loki
