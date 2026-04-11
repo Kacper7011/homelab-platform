@@ -48,12 +48,9 @@ vault/data/
 unseal-keys.txt
 
 # Ansible
-hosts.yml
 *.retry
 ansible.log
 *.vault
-vault.yml
-vault.yaml
 
 # Ignore local inventory overrides
 inventory.local
