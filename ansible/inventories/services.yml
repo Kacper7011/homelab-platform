@@ -1,0 +1,28 @@
+all:
+  children:
+    services:
+      hosts:
+        prox-services:
+          ansible_host: 10.10.10.115
+          vault_services:
+            - name: homepage
+              dest: "/home/{{ ansible_user }}/.secrets/homepage"
+
+            - name: seafile
+              dest: "/home/{{ ansible_user }}/.secrets/seafile"
+
+        prox-gateway:
+          ansible_host: 10.10.10.224
+          vault_services:
+            - name: cloudflared
+              dest: "/home/{{ ansible_user}}/.secrets/cloudflared"
+            
+            - name: adguard_home_sync
+              dest: "/home/{{ ansible_user }}/.secrets/adguard_home_sync"
+
+        prox-monitoring:
+          ansible_host: 10.10.10.107
+          vault_services:
+            - name: grafana
+              dest: "/home/{{ ansible_user }}/.secrets/grafana"
+

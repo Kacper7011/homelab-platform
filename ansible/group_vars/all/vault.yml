@@ -1,0 +1,2 @@
+ansible_hashi_vault_url: "http://10.10.10.216:8200"
+ansible_hashi_vault_auth_method: "approle"
