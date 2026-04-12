@@ -13,16 +13,17 @@ services:
       - forgejo_data:/data
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - '3000:3000'
+      - '3030:3000'
       - '222:22'
 
 # forgejo runner
   runner:
     container_name: forgejo_runner
     image: data.forgejo.org/forgejo/runner:4.0.1
+    env_file:
+      - ~/.secrets/forgejo/.env
     environment: 
-      - FORGEJO_INSTANCE_URL=http://forgejo:3000
-      - FORGEJO_RUNNER_REGISTRATION_TOKEN=${forgejo_token}
+      - FORGEJO_INSTANCE_URL=http://forgejo:3030
     group_add:
       - "998"
     restart: unless-stopped
@@ -36,6 +37,7 @@ services:
 
 volumes:
   forgejo_data:
+    name: forgejo_data
 
 networks:
   forgejo:
