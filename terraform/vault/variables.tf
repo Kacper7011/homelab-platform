@@ -66,3 +66,9 @@ variable "grafana_env" {
     sensitive = true
 }
 
+variable "forgejo_env" {
+    description = "JSON-encoded string containing environment variables for the Forgejo application"
+    type = map(string)
+    sensitive = true
+}
+

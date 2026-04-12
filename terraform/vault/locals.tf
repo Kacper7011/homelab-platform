@@ -4,7 +4,8 @@ locals {
         "homepage",
         "cloudflared",
         "adguard_home_sync",
-        "grafana"
+        "grafana",
+        "forgejo"
     ]
 
     services_env =  {
@@ -13,5 +14,6 @@ locals {
         cloudflared = var.cloudflared_env
         adguard_home_sync = var.adguard_home_sync_env
         grafana = var.grafana_env
+        forgejo = var.forgejo_env
     }
 }

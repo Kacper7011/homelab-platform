@@ -10,6 +10,9 @@ all:
 
             - name: seafile
               dest: "/home/{{ ansible_user }}/.secrets/seafile"
+            
+            - name: forgejo
+              dest: "/home/{{ ansible_user }}/.secrets/forgejo"
 
         prox-gateway:
           ansible_host: 10.10.10.224
