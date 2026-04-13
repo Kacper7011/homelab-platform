@@ -1,0 +1,13 @@
+services:
+  homelab-hub:
+    image: raidowl/homelab-hub:latest
+    container_name: homelab-hub
+    ports:
+      - "8020:8000"
+    volumes:
+      - homelab-hub-data:/data
+    restart: unless-stopped
+
+volumes:
+  homelab-hub-data:
+    name: homelab-hub-data

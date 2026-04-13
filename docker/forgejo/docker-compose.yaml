@@ -1,5 +1,5 @@
 services:
-# forgejo
+  
   forgejo:
     container_name: forgejo
     image: codeberg.org/forgejo/forgejo:14
@@ -16,16 +16,15 @@ services:
       - '3030:3000'
       - '222:22'
 
-# forgejo runner
   runner:
     container_name: forgejo_runner
     image: data.forgejo.org/forgejo/runner:4.0.1
     env_file:
       - ~/.secrets/forgejo/.env
     environment: 
-      - FORGEJO_INSTANCE_URL=http://forgejo:3030
+      - FORGEJO_INSTANCE_URL=http://forgejo:3000
     group_add:
-      - "998"
+      - "999"
     restart: unless-stopped
     networks:
       - forgejo
@@ -43,4 +42,3 @@ networks:
   forgejo:
     name: forgejo
     external: false
-    
