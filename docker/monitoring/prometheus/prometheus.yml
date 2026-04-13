@@ -75,11 +75,7 @@ scrape_configs:
       - targets: ["10.10.10.107:9100"]
         labels: 
           nodename: "prox-monitoring"
-
-      - targets: ["10.10.10.249:9100"]
-        labels:
-          nodename: "prox-cicd"
-
+    
     # LXC containers
       - targets: ["10.10.10.50:9100"]
         labels:
@@ -113,7 +109,3 @@ scrape_configs:
       - targets: ["10.10.10.107:6060"]
         labels:
           nodename: "prox-monitoring"
-      
-      - targets: ["10.10.10.249:6060"]
-        labels:
-          nodename: "prox-cicd"
