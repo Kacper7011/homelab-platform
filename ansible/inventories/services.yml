@@ -14,6 +14,9 @@ all:
             - name: forgejo
               dest: "/home/{{ ansible_user }}/.secrets/forgejo"
 
+            - name: rustfs
+              dest: "/home/{{ ansible_user }}/.secrets/rustfs"
+
         prox-gateway:
           ansible_host: 10.10.10.224
           vault_services:

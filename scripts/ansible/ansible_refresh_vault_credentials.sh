@@ -22,11 +22,11 @@ export VAULT_TOKEN="$ROOT_TOKEN"
 terraform destroy -target=vault_approle_auth_backend_role_secret_id.ansible -auto-approve
 terraform apply -auto-approve
 
-terraform output -raw ansible_secret_id > ~/.vault/secret_id
-chmod 600 ~/.vault/secret_id
+terraform output -raw ansible_secret_id > ~/.vault/ansible/secret_id
+chmod 600 ~/.vault/ansible/secret_id
 
-touch ~/.vault/ansible_refresh.log
+touch ~/.vault/ansible/ansible_refresh.log
 
-echo "[ $LOG_DATE ] Ansible's secret_id has been refreshed" >> ~/.vault/ansible_refresh.log
+echo "[ $LOG_DATE ] Ansible's secret_id has been refreshed" >> ~/.vault/ansible/ansible_refresh.log
 
 

@@ -72,3 +72,8 @@ variable "forgejo_env" {
     sensitive = true
 }
 
+variable "rustfs_env" {
+    description = "JSON-encoded string containing environment variables for the rustfs application"
+    type = map(string)
+    sensitive = true
+}
