@@ -10,5 +10,9 @@ services:
       - "22000:22000/udp"
       - "21027:21027/udp"
     volumes:
-      - /srv/syncthing:/var/syncthing
+      - syncthing_data:/var/syncthing
       - /srv/music/library:/music  
+
+volumes:
+  syncthing_data:
+    name: syncthing_data

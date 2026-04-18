@@ -11,5 +11,9 @@ services:
       ND_SCANINTERVAL: 1m
       ND_LOGLEVEL: info
     volumes:
-      - /srv/navidrome/data:/data
+      - navidrome_data:/data
       - /srv/music/library:/music 
+
+volumes:
+  navidrome_data:
+    name: navidrome_data

@@ -5,9 +5,9 @@ services:
     ports:
       - "8020:8000"
     volumes:
-      - homelab-hub-data:/data
+      - homelab_hub_data:/data
     restart: unless-stopped
 
 volumes:
-  homelab-hub-data:
-    name: homelab-hub-data
+  homelab_hub_data:
+    name: homelab_hub_data

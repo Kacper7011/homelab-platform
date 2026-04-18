@@ -8,6 +8,10 @@ services:
       - DOMAIN=https://warden.kacper-nxn.pl
       - I_REALLY_WANT_VOLATILE_STORAGE=false
     volumes:
-      - /srv/vaultwarden/vw-data:/data
+      - vaultwarden_data:/data
     ports:
       - "8000:80"
+
+volumes:
+  vaultwarden_data:
+    name: vaultwarden_data
