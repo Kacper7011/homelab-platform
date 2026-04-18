@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - /mnt/monitoring/prometheus:/prometheus
+      - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./loki/loki.yml:/etc/loki/loki.yml:ro
-      - /mnt/monitoring/loki:/loki
+      - loki_data:/loki
     command: -config.file=/etc/loki/loki.yml
     ports:
       - "3100:3100"
@@ -57,7 +57,23 @@ services:
       - monitoring
 
 volumes:
+  prometheus_data:
+    name: prometheus_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/monitoring/prometheus_data
+  loki_data:
+    name: loki_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/monitoring/loki_data
   grafana_data:
+    name: grafana_data
+
 
 networks:
   monitoring:
