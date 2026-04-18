@@ -1,0 +1,14 @@
+services:
+  rustfs:
+    image: rustfs/rustfs
+    container_name: rustfs
+    env_file:
+      - ~/.secrets/rustfs/.env
+    user: "10001:10001"
+    restart: unless-stopped
+    ports:
+      - "9020:9000"
+      - "9001:9001"
+    volumes:
+      - /mnt/rustfs-data:/data
+
