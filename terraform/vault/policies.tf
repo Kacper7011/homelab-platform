@@ -18,14 +18,13 @@ resource "vault_policy" "ansible" {
     EOT
 }
 
-resource "vault_policy" "kopia" {
+resource "vault_policy" "restic" {
 
-    name = "kopia"
+    name = "restic"
 
     policy = <<-EOT
-        path "secret/data/kopia/credentials" {
+        path "secret/data/services/restic/credentials" {
             capabilities = ["read"]
         }
     EOT
 }
-

@@ -1,5 +1,5 @@
-output "kopia_agent_user" {
-    value = minio_iam_user.kopia_agent.name
+output "restic_user" {
+    value = minio_iam_user.restic.name
 }
 
 output "buckets" {

@@ -6,7 +6,7 @@ locals {
         "adguard_home_sync",
         "grafana",
         "forgejo",
-	    "rustfs"
+	    "rustfs",
     ]
 
     services_env =  {

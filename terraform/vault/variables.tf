@@ -23,15 +23,22 @@ variable "sys_user_password" {
     sensitive = true
 }
 
-# Kopia credentials
-variable "kopia_access_key" {
-    description = "Access key for the kopia user"
+# restic credentials
+variable "restic_access_key" {
+    description = "Access key for the restic user"
     type = string
 }
 
-variable "kopia_secret_access_key" {
-    description = "Secret access key for the kopia user"
+variable "restic_secret_access_key" {
+    description = "Secret access key for the restic user"
     type = string
+    sensitive = true
+}
+
+variable "restic_repo_password" {
+    description = "Password for the restic repository"
+    type = string
+    sensitive = true
 }
 
 # Ansible SSH key pair

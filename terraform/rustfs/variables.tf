@@ -19,8 +19,8 @@ variable rustfs_host {
     type = string
 }
 
-variable kopia_agent_secret {
-    description = "Secret key for Kopia agent"
+variable restic_secret {
+    description = "Secret key for restic user"
     type = string
     sensitive = true
 }
