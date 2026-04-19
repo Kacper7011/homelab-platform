@@ -23,6 +23,17 @@ variable "sys_user_password" {
     sensitive = true
 }
 
+# Kopia credentials
+variable "kopia_access_key" {
+    description = "Access key for the kopia user"
+    type = string
+}
+
+variable "kopia_secret_access_key" {
+    description = "Secret access key for the kopia user"
+    type = string
+}
+
 # Ansible SSH key pair
 variable "ansible_ssh_private_key" {
     description = "Private SSH key for Ansible to access remote hosts"

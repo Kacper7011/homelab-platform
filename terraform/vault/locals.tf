@@ -6,7 +6,7 @@ locals {
         "adguard_home_sync",
         "grafana",
         "forgejo",
-	"rustfs"
+	    "rustfs"
     ]
 
     services_env =  {
@@ -16,6 +16,6 @@ locals {
         adguard_home_sync = var.adguard_home_sync_env
         grafana = var.grafana_env
         forgejo = var.forgejo_env
-	rustfs = var.rustfs_env
+	    rustfs = var.rustfs_env
     }
 }

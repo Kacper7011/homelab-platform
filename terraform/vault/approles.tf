@@ -27,3 +27,18 @@ resource "vault_approle_auth_backend_role_secret_id" "ansible" {
         ignore_changes = all
     }
 }
+
+# Create AppRole role for kopia with read-only access to secrets
+
+resource "vault_approle_auth_backend_role" "kopia" {
+    backend = vault_auth_backend.approle.path
+    role_name = "kopia"
+    token_policies = [vault_policy.kopia.name]
+    token_ttl = 3600
+    token_max_ttl = 7200
+}
+
+resource "vault_approle_auth_backend_role_secret_id" "kopia" {
+    backend = vault_auth_backend.approle.path
+    role_name = vault_approle_auth_backend_role.kopia.role_name
+}

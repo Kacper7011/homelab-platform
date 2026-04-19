@@ -17,3 +17,15 @@ resource "vault_policy" "ansible" {
         }
     EOT
 }
+
+resource "vault_policy" "kopia" {
+
+    name = "kopia"
+
+    policy = <<-EOT
+        path "secret/data/kopia/*" {
+            capabilities = ["read"]
+        }
+    EOT
+}
+
