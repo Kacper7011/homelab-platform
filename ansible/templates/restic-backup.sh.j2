@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+# Restic backup script - deployed by Ansible
+# Automatically detects hostname and runs appropriate backup sections
+set -euo pipefail
+
+# ── CREDENTIALS ────────────────────────────────────────────────────
+export AWS_ACCESS_KEY_ID="{{ restic_s3_access_key }}"
+export AWS_SECRET_ACCESS_KEY="{{ restic_s3_secret_key }}"
+export AWS_DEFAULT_REGION="us-east-1"
+export RESTIC_PASSWORD="{{ restic_password }}"
+
+# ── CONFIGURATION ──────────────────────────────────────────────────
+# Repository named after the hostname of the machine
+HOSTNAME=$(hostname)
+export RESTIC_REPOSITORY="s3:http://{{ restic_s3_endpoint }}/{{ restic_s3_bucket }}/${HOSTNAME}"
+
+RETENTION_LAST=5
+RETENTION_DAILY=7
+RETENTION_WEEKLY=4
+RETENTION_MONTHLY=2
+
+# Log file in ~/log/ directory
+LOG_FILE="/home/kacper/logs/restic-backup.log"
+
+# ── FUNCTIONS ──────────────────────────────────────────────────────
+log() {
+  local message="[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+  echo "$message"
+  echo "$message" >> "$LOG_FILE" 2>/dev/null || true
+}
+
+backup_paths() {
+  # Accept list of paths and perform backup
+  # Uses RESTIC_REPOSITORY and RESTIC_PASSWORD from env
+  local paths=("$@")
+  log "Starting backup of: ${paths[*]}"
+
+  restic backup "${paths[@]}" \
+    --host "$HOSTNAME" \
+    --verbose
+
+  log "Backup complete, running retention policy..."
+
+  restic forget \
+    --keep-last=$RETENTION_LAST \
+    --keep-daily=$RETENTION_DAILY \
+    --keep-weekly=$RETENTION_WEEKLY \
+    --keep-monthly=$RETENTION_MONTHLY \
+    --prune \
+    --verbose
+
+  log "Retention policy applied successfully"
+}
+
+init_repo_if_needed() {
+  # Initialize repository if it does not exist yet
+  if ! restic snapshots &>/dev/null; then
+    log "Repository not found, initializing..."
+    restic init
+    log "Repository initialized"
+  fi
+}
+
+# ── COMMON PATHS (backed up on every machine) ──────────────────────
+COMMON_PATHS=(
+  /var/lib/docker/volumes
+)
+
+# ── PER HOSTNAME SECTIONS ──────────────────────────────────────────
+# To add backup for a new machine, add a section:
+# prox-NAME)
+#   EXTRA_PATHS=(
+#     /opt/your-service
+#     /etc/your-directory
+#   )
+#   ;;
+
+case "$HOSTNAME" in
+  prox-services)
+    # Main services VM - Docker host with all user-facing services
+    EXTRA_PATHS=(
+    )
+    ;;
+
+  prox-monitoring)
+    # Monitoring server - Grafana, Prometheus, alerting stack
+    EXTRA_PATHS=(
+    )
+    ;;
+
+  prox-management)
+    # Management server - Ansible, Terraform, homelab tooling
+    EXTRA_PATHS=(
+    )
+    ;;
+
+  *)
+    # Default - back up common paths only
+    log "No specific paths defined for $HOSTNAME, backing up common paths only"
+    EXTRA_PATHS=()
+    ;;
+esac
+
+# ── MAIN ───────────────────────────────────────────────────────────
+log "=== Starting restic backup on $HOSTNAME ==="
+
+init_repo_if_needed
+
+# Merge common paths with per-hostname paths
+ALL_PATHS=("${COMMON_PATHS[@]}" "${EXTRA_PATHS[@]}")
+
+backup_paths "${ALL_PATHS[@]}"
+
+log "=== Backup finished successfully on $HOSTNAME ==="

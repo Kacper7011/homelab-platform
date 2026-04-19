@@ -1,0 +1,89 @@
+---
+- name: Deploy Restic backup
+  hosts: restic_backups
+  become: true
+
+  vars:
+    restic_version: "0.17.3"
+    restic_s3_access_key: "{{ lookup('community.hashi_vault.hashi_vault', 'secret/data/services/restic/credentials').access_key }}"
+    restic_s3_secret_key: "{{ lookup('community.hashi_vault.hashi_vault', 'secret/data/services/restic/credentials').secret_key }}"
+    restic_password: "{{ lookup('community.hashi_vault.hashi_vault', 'secret/data/services/restic/credentials').repo_password }}"
+    restic_s3_endpoint: "10.10.10.115:9020"
+    restic_s3_bucket: "docker"
+    restic_script_dir: "/root/scripts"
+    restic_log_file: "/home/{{ ansible_user }}/logs/restic-backup.log"
+
+  tasks:
+    - name: Install bzip2 (required for restic extraction)
+      ansible.builtin.apt:
+        name: bzip2
+        state: present
+
+    - name: Download restic {{ restic_version }}
+      ansible.builtin.get_url:
+        url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_amd64.bz2"
+        dest: "/tmp/restic_{{ restic_version }}_linux_amd64.bz2"
+        mode: '0644'
+
+    - name: Extract restic binary
+      ansible.builtin.shell: |
+        bunzip2 -f /tmp/restic_{{ restic_version }}_linux_amd64.bz2
+        mv /tmp/restic_{{ restic_version }}_linux_amd64 /usr/local/bin/restic
+        chmod +x /usr/local/bin/restic
+      args:
+        creates: /usr/local/bin/restic
+
+    - name: Verify restic version
+      ansible.builtin.shell: restic version
+      register: restic_ver
+      changed_when: false
+
+    - name: Show restic version
+      ansible.builtin.debug:
+        msg: "{{ restic_ver.stdout }}"
+
+    - name: Create scripts directory
+      ansible.builtin.file:
+        path: "{{ restic_script_dir }}"
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+
+    - name: Deploy backup script
+      ansible.builtin.template:
+        src: ../templates/restic-backup.sh.j2
+        dest: "{{ restic_script_dir }}/restic-backup.sh"
+        mode: '0700'
+        owner: root
+        group: root
+
+    - name: Create log directory
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/logs"
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Create log file
+      ansible.builtin.file:
+        path: "{{ restic_log_file }}"
+        state: touch
+        mode: '0644'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        modification_time: preserve
+        access_time: preserve
+
+    - name: Add restic backup cron job
+      ansible.builtin.cron:
+        name: "restic backup"
+        user: root
+        minute: "0"
+        hour: "2"
+        day: "*"
+        month: "*"
+        weekday: "*"
+        job: "{{ restic_script_dir }}/restic-backup.sh >> {{ restic_log_file }} 2>&1"
+        state: present

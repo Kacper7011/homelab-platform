@@ -1,0 +1,14 @@
+all:
+  children:
+    restic_backups:
+      hosts:
+        prox-services:
+          ansible_host: 10.10.10.115
+        prox-monitoring:
+          ansible_host: 10.10.10.107
+        prox-vault:
+          ansible_host: 10.10.10.216
+        prox-management:
+          ansible_host: 10.10.10.121
+
+
