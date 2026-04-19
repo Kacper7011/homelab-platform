@@ -23,7 +23,7 @@ resource "vault_policy" "kopia" {
     name = "kopia"
 
     policy = <<-EOT
-        path "secret/data/kopia/*" {
+        path "secret/data/kopia/credentials" {
             capabilities = ["read"]
         }
     EOT
