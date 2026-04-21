@@ -10,7 +10,6 @@
 [![Ansible](https://img.shields.io/badge/Ansible-automation-red?logo=ansible)](https://www.ansible.com/)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-purple?logo=terraform)](https://www.terraform.io/)
 [![Vault](https://img.shields.io/badge/HashiCorp-Vault-black?logo=vault)](https://www.vaultproject.io/)
-[![Restic](https://img.shields.io/badge/Restic-backups-green)](https://restic.net/)
 
 ![Heimdall dashboard – all services at a glance](docs/screenshots/heimdall.png)
 
@@ -237,6 +236,23 @@ Restic backup agents are deployed and scheduled via Ansible
 cd ansible
 ansible-playbook -i inventories/restic-backups.yml playbooks/restic-backup.yml
 ```
+
+---
+
+## Documentation
+
+Detailed documentation is in the [`docs/`](docs/) directory.
+
+| Document | Description |
+|----------|-------------|
+| [Architecture](docs/architecture.md) | Infrastructure topology, host inventory, module dependencies, traffic flow |
+| [Getting Started](docs/getting-started.md) | Step-by-step bootstrap guide — from zero to all services running |
+| [Secrets Management](docs/secrets.md) | How Vault works, AppRole auth, secret rotation, env file deployment |
+| [Variables Reference](docs/variables-reference.md) | All environment variables, Terraform tfvars, and Ansible variables in one place |
+| [Ansible](docs/modules/ansible.md) | Playbooks, roles, inventory files, how to run |
+| [Terraform](docs/modules/terraform.md) | Three modules, apply order, required variables |
+| [Docker Services](docs/modules/docker.md) | All 13 services — hosts, ports, networks, volumes |
+| [Scripts & Utilities](docs/modules/scripts.md) | Helper scripts and Ansible templates |
 
 ---
 
