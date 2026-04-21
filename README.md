@@ -8,6 +8,9 @@
 [![Proxmox](https://img.shields.io/badge/Proxmox-VE-orange?logo=proxmox)](https://www.proxmox.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue?logo=docker)](https://docs.docker.com/compose/)
 [![Ansible](https://img.shields.io/badge/Ansible-automation-red?logo=ansible)](https://www.ansible.com/)
+[![Terraform](https://img.shields.io/badge/Terraform-IaC-purple?logo=terraform)](https://www.terraform.io/)
+[![Vault](https://img.shields.io/badge/HashiCorp-Vault-black?logo=vault)](https://www.vaultproject.io/)
+[![Restic](https://img.shields.io/badge/Restic-backups-green)](https://restic.net/)
 
 ![Heimdall dashboard – all services at a glance](docs/screenshots/heimdall.png)
 
@@ -63,6 +66,11 @@ Infrastructure foundations — the tools that make everything run.
     <td>Hypervisor — runs the entire cluster of virtual machines</td>
   </tr>
   <tr>
+    <td><img src="https://cdn.simpleicons.org/proxmox" width="32" alt="Proxmox Backup Server" /></td>
+    <td><a href="https://www.proxmox.com/en/proxmox-backup-server">Proxmox Backup Server</a></td>
+    <td>VM & LXC backups — incremental, deduplicated backups of all virtual machines and containers</td>
+  </tr>
+  <tr>
     <td><img src="https://cdn.simpleicons.org/docker" width="32" alt="Docker" /></td>
     <td><a href="https://docs.docker.com/compose/">Docker + Docker Compose</a></td>
     <td>Container runtime and service orchestration</td>
@@ -86,6 +94,16 @@ Infrastructure foundations — the tools that make everything run.
     <td><img src="https://cdn.simpleicons.org/tailscale" width="32" alt="Tailscale" /></td>
     <td><a href="https://tailscale.com/">Tailscale</a></td>
     <td>Zero-config VPN for secure remote access</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/terraform" width="32" alt="Terraform" /></td>
+    <td><a href="https://www.terraform.io/">Terraform</a></td>
+    <td>Infrastructure as code — manages Cloudflare DNS/tunnels, Vault policies and RustFS buckets</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/vault" width="32" alt="Vault" /></td>
+    <td><a href="https://www.vaultproject.io/">HashiCorp Vault</a></td>
+    <td>Secrets management — AppRole auth for Ansible and Restic, centralized credentials store</td>
   </tr>
 </table>
 
@@ -147,32 +165,24 @@ Hosted applications running on top of the infrastructure.
     <td><a href="https://heimdall.site/">Heimdall</a></td>
     <td>Dashboard — start page with links to all services</td>
   </tr>
+  <tr>
+    <td><img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/homepage.png" width="32" alt="Homepage" /></td>
+    <td><a href="https://gethomepage.dev/">Homepage</a></td>
+    <td>Dashboard — modern, highly customisable start page with Docker and service integrations</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/rustfs.svg" width="32" alt="RustFS" /></td>
+    <td><a href="https://rustfs.com/">RustFS</a></td>
+    <td>Object storage — self-hosted S3-compatible store used as Restic backup target</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/adguard" width="32" alt="AdGuardHome Sync" /></td>
+    <td><a href="https://github.com/bakito/adguardhome-sync">AdGuardHome Sync</a></td>
+    <td>DNS sync — keeps two AdGuard Home instances in sync every 5 minutes</td>
+  </tr>
 </table>
 
 ![Grafana dashboard – cluster metrics and VM overview](docs/screenshots/grafana.png)
-
-
----
-
-## Repository Structure
-
-```
-homelab-platform/
-├── ansible/                  # Ansible playbooks and roles
-│   ├── inventories/          # Host inventory (example included)
-│   ├── playbooks/            # Node exporter, cAdvisor, Promtail setup, etc.
-│   └── roles/                # Roles: bootstrap, docker, ...
-├── cicd/                     # Forgejo + Forgejo Runner
-├── docker/
-│   ├── gateway/              # Traefik + Cloudflared
-│   ├── heimdall/             # Dashboard
-│   ├── monitoring/           # Prometheus + Loki + Grafana
-│   ├── music-stack/          # Navidrome + Syncthing
-│   ├── seafile/              # Seafile + MariaDB + Memcached
-│   └── vaultwarden/          # Vaultwarden
-└── docs/
-    └── screenshots/          # Screenshots used in README
-```
 
 ---
 
@@ -182,22 +192,50 @@ Each stack is started independently with `docker compose up -d` from its directo
 
 **Prerequisites:**
 - Docker + Docker Compose
-- A `.env` file with the required variables (template: `.env.example` in each directory)
+- A running HashiCorp Vault instance with secrets populated (see `terraform/vault/`)
 
-**Example:**
+### Secrets management
+
+All service credentials are stored in **HashiCorp Vault** under `secret/data/services/<service-name>`. Ansible authenticates to Vault via **AppRole** and deploys a `.env` file for each service into `~/.secrets/<service-name>/` on the target host. Docker Compose stacks reference these files via `env_file`.
+
+To deploy secrets to all hosts:
 
 ```bash
+cd ansible
+ansible-playbook -i inventories/services.yml playbooks/deploy-env-files.yml
+```
+
+Each host in `inventories/services.yml` declares which services it runs and where the secrets should be written. After this step, all stacks on a given host have their credentials in place and can be started.
+
+### Starting a stack
+
+```bash
+# on the target host
 cd docker/monitoring
-cp .env.example .env
-# fill in the variables in .env
 docker compose up -d
 ```
+
+### Infrastructure provisioning
 
 VM configuration and exporter setup on the hosts is handled by Ansible:
 
 ```bash
 cd ansible
 ansible-playbook -i inventories/hosts.yml playbooks/node-exporter-setup.yml
+```
+
+Cloudflare DNS, Vault configuration and RustFS buckets are managed with Terraform:
+
+```bash
+cd terraform/cloudflare
+terraform init && terraform apply
+```
+
+Restic backup agents are deployed and scheduled via Ansible
+
+```bash
+cd ansible
+ansible-playbook -i inventories/restic-backups.yml playbooks/restic-backup.yml
 ```
 
 ---
