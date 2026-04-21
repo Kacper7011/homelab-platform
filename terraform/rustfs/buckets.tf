@@ -3,6 +3,7 @@ locals {
         "docker",
         "kubernetes",
         "terraform",
+        "vault",
         "seafile",
         "misc"
     ]
