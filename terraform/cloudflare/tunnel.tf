@@ -14,7 +14,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "homelab_tunnel_confi
 
       content {
         hostname = "${ingress_rule.value}.${var.domain_name}"
-        service = "http://traefik:80"
+        service = "http://traefik.kube-system.svc.cluster.local:80"
       }
     }
 
