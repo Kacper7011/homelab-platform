@@ -21,3 +21,18 @@ provider "vault" {
   address = var.vault_address
   token = var.root_token
 }
+
+resource "vault_mount" "kv" {
+    path = "secret"
+    type = "kv"
+
+    options = {
+      version = "2"
+    }
+
+    description = "Main homelab kv engine"
+}
+
+resource "vault_auth_backend" "approle" {
+    type = "approle"
+}
