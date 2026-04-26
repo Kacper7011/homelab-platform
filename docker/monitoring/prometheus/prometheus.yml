@@ -7,16 +7,6 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-# traefik
-  - job_name: "traefik"
-    static_configs:
-      - targets: ["10.10.10.224:8082"]
-
-# cloudflared
-  - job_name: "cloudflared"
-    static_configs:
-      - targets: ["10.10.10.224:2000"]
-
 # pve-exporter job
   - job_name: "pve-exporter"
     metrics_path: /pve
@@ -85,10 +75,6 @@ scrape_configs:
         labels:
           nodename: "prox-adguard-backup"
 
-      - targets: ["10.10.10.224:9100"]
-        labels:
-          nodename: "prox-gateway"
-
       - targets: ["10.10.10.70:9100"]
         labels:
           nodename: "prox-tailscale"
@@ -101,10 +87,6 @@ scrape_configs:
       - targets: ["10.10.10.115:6060"]
         labels:
           nodename: "prox-services"
-      
-      - targets: ["10.10.10.224:6060"]
-        labels:
-          nodename: "prox-gateway"
       
       - targets: ["10.10.10.107:6060"]
         labels:
