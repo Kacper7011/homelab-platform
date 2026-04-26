@@ -281,6 +281,7 @@ Detailed documentation is in the [`docs/`](docs/) directory.
 | [Ansible](docs/modules/ansible.md) | Playbooks, roles, inventory files, how to run |
 | [Terraform](docs/modules/terraform.md) | Three modules, apply order, required variables |
 | [Docker Services](docs/modules/docker.md) | All 13 services — hosts, ports, networks, volumes |
+| [Kubernetes](docs/modules/kubernetes.md) | Namespaces, manifests, Helm releases, apply order |
 | [Scripts & Utilities](docs/modules/scripts.md) | Helper scripts and Ansible templates |
 
 ---
