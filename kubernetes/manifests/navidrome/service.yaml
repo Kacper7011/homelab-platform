@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: navidrome-svc
+  namespace: navidrome
+spec:
+  selector:
+    app: navidrome
+  type: ClusterIP
+  ports:
+  - port: 4533
+    targetPort: 4533

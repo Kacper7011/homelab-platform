@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: navidrome-config
+  namespace: navidrome
+data:
+  ND_ENABLELEGACYAUTH: "true"
+  ND_SCANINTERVAL: "1m"
+  ND_LOGLEVEL: "info"
