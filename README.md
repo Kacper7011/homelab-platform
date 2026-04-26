@@ -7,6 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Proxmox](https://img.shields.io/badge/Proxmox-VE-orange?logo=proxmox)](https://www.proxmox.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue?logo=docker)](https://docs.docker.com/compose/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-cluster-326CE5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Helm](https://img.shields.io/badge/Helm-charts-0F1689?logo=helm&logoColor=white)](https://helm.sh/)
 [![Ansible](https://img.shields.io/badge/Ansible-automation-red?logo=ansible)](https://www.ansible.com/)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-purple?logo=terraform)](https://www.terraform.io/)
 [![Vault](https://img.shields.io/badge/HashiCorp-Vault-black?logo=vault)](https://www.vaultproject.io/)
@@ -45,7 +47,7 @@ All three nodes form a **Proxmox VE** cluster, which runs virtual machines that 
 
 ## Architecture
 
-Each service stack runs on a separate **virtual machine** inside the Proxmox cluster. External traffic goes through a Cloudflare Tunnel to Traefik, which acts as a reverse proxy and handles TLS termination. Metrics and logs are collected centrally by the monitoring stack.
+Each service stack runs on a separate **virtual machine** inside the Proxmox cluster. Services are hosted with **Docker Compose** and accessible on the private network. A dedicated VM hosts a **Kubernetes** cluster responsible solely for exposing selected services to the internet — Cloudflared runs inside Kubernetes and routes external traffic through the Cloudflare Tunnel to Traefik, which forwards it to the appropriate service. Metrics and logs are collected centrally by the monitoring stack.
 
 ---
 
@@ -73,6 +75,16 @@ Infrastructure foundations — the tools that make everything run.
     <td><img src="https://cdn.simpleicons.org/docker" width="32" alt="Docker" /></td>
     <td><a href="https://docs.docker.com/compose/">Docker + Docker Compose</a></td>
     <td>Container runtime and service orchestration</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/kubernetes" width="32" alt="Kubernetes" /></td>
+    <td><a href="https://kubernetes.io/">Kubernetes</a></td>
+    <td>Container orchestration — runs Cloudflared tunnel and selected services, exposing them externally via Cloudflare</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/helm" width="32" alt="Helm" /></td>
+    <td><a href="https://helm.sh/">Helm</a></td>
+    <td>Kubernetes package manager — deploys third-party charts (e.g. Vault Agent Injector) with custom values</td>
   </tr>
   <tr>
     <td><img src="https://cdn.simpleicons.org/ansible" width="32" alt="Ansible" /></td>
@@ -235,6 +247,23 @@ Restic backup agents are deployed and scheduled via Ansible
 ```bash
 cd ansible
 ansible-playbook -i inventories/restic-backups.yml playbooks/restic-backup.yml
+```
+
+### Kubernetes manifests
+
+Manifests for Cloudflared and services exposed through the tunnel are applied with kubectl:
+
+```bash
+kubectl apply -f kubernetes/manifests/cloudflared/
+kubectl apply -f kubernetes/manifests/navidrome/
+```
+
+Third-party components are installed via Helm charts:
+
+```bash
+# Vault Agent Injector
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm install vault hashicorp/vault -f kubernetes/releases/vault/values.yaml
 ```
 
 ---
