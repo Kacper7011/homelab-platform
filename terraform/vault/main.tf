@@ -36,3 +36,7 @@ resource "vault_mount" "kv" {
 resource "vault_auth_backend" "approle" {
     type = "approle"
 }
+
+resource "vault_auth_backend" "kubernetes" {
+    type = "kubernetes"
+}

@@ -1,0 +1,7 @@
+global:
+  enabled: false
+  externalVaultAddr: "http://10.10.10.216:8200"
+
+injector:
+  enabled: true
+  externalVaultAddr: "http://10.10.10.216:8200"

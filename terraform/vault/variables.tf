@@ -23,6 +23,19 @@ variable "sys_user_password" {
     sensitive = true
 }
 
+# Kubernetes auth backend
+variable "vault_k8s_rewiever_token" {
+    description = "JWT token for the Kubernetes token reviewer service account"
+    type = string
+    sensitive = true
+}
+
+variable "kubernetes_cert" {
+    description = "Certificate for the Kubernetes cluster"
+    type = string
+    sensitive = true
+}
+
 # restic credentials
 variable "restic_access_key" {
     description = "Access key for the restic user"
