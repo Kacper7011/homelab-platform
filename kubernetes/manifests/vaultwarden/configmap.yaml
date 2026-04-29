@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vaultwarden-config
+  namespace: vaultwarden
+data:
+  SIGNUPS_ALLOWED: "false"
+  DOMAIN: https://warden.kacper-nxn.pl
+  I_REALLY_WANT_VOLATILE_STORAGE: "false"
