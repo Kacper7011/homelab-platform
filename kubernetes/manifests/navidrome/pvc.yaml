@@ -4,7 +4,7 @@ metadata:
   name: navidrome-pvc
   namespace: navidrome
 spec:
-  storageClassName: local-path
+  storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   resources:
