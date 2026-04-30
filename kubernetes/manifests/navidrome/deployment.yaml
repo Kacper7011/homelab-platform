@@ -41,5 +41,5 @@ spec:
             claimName: navidrome-pvc
         - name: music-library
           hostPath:
-            path: /mnt/k8s-storage/music
+            path: /mnt/k8s-storage/navidrome_music
             type: Directory
