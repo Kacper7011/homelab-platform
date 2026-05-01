@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seafile
+  namespace: seafile
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: seafile
+  template:
+    metadata:
+      labels:
+        app: seafile
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "seafile"
+        vault.hashicorp.com/agent-inject-secret-seafile-config: "secret/services/seafile"
+        vault.hashicorp.com/agent-inject-template-seafile-config: |
+          {{- with secret "secret/services/seafile" -}}
+          export SEAFILE_ADMIN_EMAIL="{{ .Data.data.SEAFILE_ADMIN_EMAIL }}"
+          export SEAFILE_ADMIN_PASSWORD="{{ .Data.data.SEAFILE_ADMIN_PASSWORD }}"
+          export SEAFILE_SERVER_HOSTNAME="{{ .Data.data.SEAFILE_SERVER_HOSTNAME }}"
+          export DB_ROOT_PASSWD="{{ .Data.data.DB_ROOT_PASSWD }}"
+          {{- end }}
+    spec:
+      serviceAccountName: seafile-sa
+      initContainers:
+        - name: wait-for-services
+          image: busybox:1.28
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for MariaDB"
+              until nc -zv mariadb-svc 3306; do
+              sleep 2
+              done
+              echo "Waiting for memcached"
+              until nc -zv memcached-svc 11211; do
+              sleep 2
+              done
+              echo "Everything is ready"
+      containers:
+        - name: seafile
+          image: seafileltd/seafile-mc:latest
+          command: ["/bin/bash", "-c"]
+          args: ["source /vault/secrets/seafile-config && exec /sbin/my_init -- /scripts/enterpoint.sh"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: seafile-config
+          volumeMounts:
+            - name: seafile-data
+              mountPath: /shared
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          startupProbe:
+            httpGet:
+              path: /api2/ping/
+              port: 80
+            failureThreshold: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api2/ping/
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api2/ping/
+              port: 80
+            periodSeconds: 20
+            failureThreshold: 5
+
+      volumes:
+        - name: seafile-data
+          persistentVolumeClaim:
+            claimName: seafile-pvc

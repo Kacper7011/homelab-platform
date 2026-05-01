@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seafile-config
+  namespace: seafile
+data:
+  DB_HOST: mariadb-svc
+  SEAFILE_SERVER_LETSENCRYPT: "false"
+  SERVICE_URL: "https://seafile.kacper-nxn.pl"
+  FILE_SERVER_ROOT: "https://seafile.kacper-nxn.pl/seafhttp"

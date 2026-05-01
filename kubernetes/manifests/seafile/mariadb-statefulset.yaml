@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+  namespace: seafile
+spec:
+  serviceName: "mariadb"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "seafile"
+        vault.hashicorp.com/agent-inject-secret-database-config: "secret/services/seafile"
+        vault.hashicorp.com/agent-inject-template-database-config: |
+          {{- with secret "secret/services/seafile" -}}
+          {{ .Data.data.MYSQL_ROOT_PASSWORD }}
+          {{- end }}
+    spec:
+      serviceAccountName: seafile-sa
+      containers:
+        - name: mariadb
+          image: mariadb:10.11
+          env:
+            - name: MARIADB_ROOT_PASSWORD_FILE
+              value: /vault/secrets/database-config
+          ports:
+            - containerPort: 3306
+              name: mariadb
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          startupProbe:
+            exec:
+              command: ["mariadb-admin", "ping", "-h", "localhost"]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            exec:
+              command: ["mariadb-admin", "ping", "-h", "localhost"]
+            periodSeconds: 10
+            failureThreshold: 3
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: local-storage
+        resources:
+          requests:
+            storage: 2Gi
