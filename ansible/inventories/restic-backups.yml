@@ -2,6 +2,8 @@ all:
   children:
     restic_backups:
       hosts:
+        k3s-control-plane:
+          ansible_host: 10.10.10.106
         prox-services:
           ansible_host: 10.10.10.115
         prox-monitoring:

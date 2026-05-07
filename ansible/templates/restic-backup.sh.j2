@@ -93,7 +93,11 @@ case "$HOSTNAME" in
     EXTRA_PATHS=(
     )
     ;;
-
+  k3s-control-plane)
+    EXTRA_PATHS=(
+      /mnt/k8s-storage
+    )
+    ;;
   *)
     # Default - back up common paths only
     log "No specific paths defined for $HOSTNAME, backing up common paths only"
